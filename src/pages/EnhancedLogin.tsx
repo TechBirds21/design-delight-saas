@@ -28,8 +28,8 @@ import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'sonner';
 
 const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  email: z.string().min(1, 'Please enter username'),
+  password: z.string().min(1, 'Please enter password'),
   role: z.string().min(1, 'Please select a role'),
 });
 
@@ -44,9 +44,9 @@ const EnhancedLogin: React.FC = () => {
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
-      password: '',
-      role: '',
+      email: 'abc',
+      password: '123',
+      role: 'reception',
     },
   });
 
@@ -115,24 +115,28 @@ const EnhancedLogin: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      await login(data.email, data.password);
       
-      // Navigate to role-specific dashboard
-      const roleRoutes: Record<string, string> = {
-        reception: '/reception',
-        billing: '/billing',
-        doctor: '/doctor',
-        hr: '/hr',
-        admin: '/admin',
-        pharmacy: '/inventory',
-        technician: '/technician',
-        procedures: '/procedures'
-      };
-      
-      navigate(roleRoutes[data.role] || '/dashboard');
-      toast.success(`Signed in as ${data.role}`);
-    } catch (error: any) {
-      toast.error(error.response?.data?.error || 'Login failed');
+      // Simple validation for demo - any role works with abc/123
+      if (data.email === 'abc' && data.password === '123') {
+        await login(data.email, data.password);
+        
+        // Navigate to role-specific dashboard
+        const roleRoutes: Record<string, string> = {
+          reception: '/reception',
+          billing: '/billing',
+          doctor: '/doctor',
+          hr: '/hr',
+          admin: '/admin',
+          pharmacy: '/inventory',
+          technician: '/technician',
+          procedures: '/procedures'
+        };
+        
+        navigate(roleRoutes[data.role] || '/dashboard');
+        toast.success(`Signed in as ${data.role}`);
+      } else {
+        throw new Error('Invalid credentials. Use abc/123 for demo.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -243,13 +247,13 @@ const EnhancedLogin: React.FC = () => {
                   )}
                 </div>
 
-                {/* Email */}
+                {/* Username */}
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email">Username</Label>
                   <Input
                     id="email"
-                    type="email"
-                    placeholder="name@clinic.com"
+                    type="text"
+                    placeholder="abc"
                     className="h-12"
                     {...register('email')}
                   />
@@ -262,18 +266,13 @@ const EnhancedLogin: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Password</Label>
-                    <button 
-                      type="button"
-                      className="text-sm text-indigo-600 hover:text-indigo-500"
-                    >
-                      Forgot password?
-                    </button>
+                    <span className="text-sm text-gray-500">Demo: 123</span>
                   </div>
                   <div className="relative">
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
+                      placeholder="123"
                       className="h-12 pr-10"
                       {...register('password')}
                     />
