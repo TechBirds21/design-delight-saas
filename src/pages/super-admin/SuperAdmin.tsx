@@ -35,7 +35,6 @@ import {
 import SuperAdminService from '@/services/super-admin.service';
 import type {
   SuperAdminStats,
-  Clinic,
   SystemLog,
   SupportTicket
 } from '@/api/super-admin';
@@ -48,19 +47,14 @@ const apiUsageMock = [
   { name: 'DermaCare Solutions', value: 24800 },
   { name: 'LaserTech Clinic', value: 3200 }
 ];
-const activeUsersMock = [
-  { name: 'SkinClinic Pro', users: 18 },
-  { name: 'BeautyMed Center', users: 12 },
-  { name: 'DermaCare Solutions', users: 35 },
-  { name: 'LaserTech Clinic', users: 8 }
-];
+// const activeUsersMock = [...];
 const PIE_COLORS = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b'];
 
 interface StatsCardProps {
   title: string;
   value: string | number;
   change?: { value: string; positive: boolean };
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: any;
   color: string;
 }
 
@@ -103,15 +97,7 @@ const MetricCard: React.FC<StatsCardProps> = ({
   </Card>
 );
 
-const getStatusColor = (status: string) => {
-  const colors: Record<string, string> = {
-    active: 'bg-green-100 text-green-800 border-green-200',
-    inactive: 'bg-gray-100 text-gray-800 border-gray-200',
-    trial: 'bg-orange-100 text-orange-800 border-orange-200',
-    suspended: 'bg-red-100 text-red-800 border-red-200'
-  };
-  return colors[status] ?? colors.inactive;
-};
+// const getStatusColor = (status: string) => {...};
 const getPriorityColor = (priority: string) => {
   const colors: Record<string, string> = {
     low: 'bg-blue-100 text-blue-800 border-blue-200',
@@ -270,7 +256,7 @@ const SuperAdminDashboard: React.FC = () => {
         <Card>
           <CardHeader className="pb-2 flex justify-between items-center">
             <CardTitle className="text-lg font-semibold flex items-center">
-              <PieChartIcon size={18} className="mr-2 text-indigo-500" />
+              <Activity size={18} className="mr-2 text-indigo-500" />
               Subscription Plan Distribution
             </CardTitle>
             <Button asChild variant="outline" size="sm">

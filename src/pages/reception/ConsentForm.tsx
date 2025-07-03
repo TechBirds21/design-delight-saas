@@ -74,7 +74,7 @@ const ConsentForm: React.FC = () => {
 
   const saveSignature = () => {
     if (signatureRef.current && !signatureRef.current.isEmpty()) {
-      const data = signatureRef.current.toDataURL('image/png');
+      const data = signatureRef.current.getTrimmedCanvas().toDataURL();
       setSignatureData(data);
       toast.success('Signature captured');
     }

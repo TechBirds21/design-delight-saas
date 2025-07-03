@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
+// import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -21,85 +21,58 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar';
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  LineChart,
-  Line
-} from 'recharts';
+// import {
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableHead,
+//   TableHeader,
+//   TableRow,
+// } from '@/components/ui/table';
+// import {
+//   Avatar,
+//   AvatarFallback,
+//   AvatarImage,
+// } from '@/components/ui/avatar';
+// import {
+//   ResponsiveContainer,
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   LineChart,
+//   Line
+// } from 'recharts';
 import {
   ArrowLeft,
   Building,
-  Globe,
-  Mail,
-  Phone,
-  User,
-  Clock,
-  BarChart3,
   Settings,
   RefreshCw,
   Send,
   AlertTriangle,
   PauseCircle,
   Lock,
-  Plus,
-  FileText,
-  DollarSign,
-  XCircle
+  Plus
 } from 'lucide-react';
 import {
   getClientDetails,
   toggleClientModule,
-  updateClientStatus,
-  getClientUsageLogs
+  updateClientStatus
 } from '@/api/super-admin';
-import type { Clinic, UsageLog } from '@/api/super-admin';
+import type { Clinic } from '@/api/super-admin';
 import { toast } from 'sonner';
 
-// Mock data for usage chart
-const usageData = [
-  { date: '05/01', apiHits: 420 },
-  /* …14 days… */
-  { date: '05/14', apiHits: 590 }
-];
-
-// Mock data for dashboard views
-const dashboardViewsData = [
-  { date: '05/01', views: 45 },
-  /* …14 days… */
-  { date: '05/14', views: 62 }
-];
-
-// Mock payment history
-const paymentHistory = [
-  { id: 'pay1', date: '2024-04-15', amount: 299, plan: 'Professional', status: 'paid' },
-  /* … last 5 payments … */
-  { id: 'pay5', date: '2023-12-15', amount: 299, plan: 'Professional', status: 'paid' }
-];
+// Mock data (unused for now)
+// const usageData = [...];
+// const dashboardViewsData = [...];
+// const paymentHistory = [...];
 
 const ClientDetail: React.FC = () => {
   const { clientId } = useParams<{ clientId: string }>();
   const navigate = useNavigate();
   const [client, setClient] = useState<Clinic | null>(null);
-  const [usageLogs, setUsageLogs] = useState<UsageLog[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Dialog states
@@ -112,17 +85,10 @@ const ClientDetail: React.FC = () => {
   const [newBranchAddress, setNewBranchAddress] = useState('');
   const [newBranchPhone, setNewBranchPhone] = useState('');
 
-  // Role permissions (mocked)
-  const [rolePermissions, setRolePermissions] = useState<{
-    [role: string]: string[];
-  }>({
-    admin: ['dashboard','patients','appointments','inventory','billing','crm','hr','reports','admin','reception','doctor','photo-manager','technician'],
-    doctor: ['dashboard','patients','appointments','reports','doctor','photo-manager'],
-    nurse: ['dashboard','patients','appointments'],
-    receptionist: ['dashboard','patients','appointments','billing','reception'],
-    pharmacist: ['dashboard','patients','inventory'],
-    technician: ['dashboard','technician','photo-manager']
-  });
+  // Mock role permissions (unused)
+  // const [rolePermissions, setRolePermissions] = useState<{
+  //   [role: string]: string[];
+  // }>({...});
 
   useEffect(() => {
     if (clientId) loadClientDetails();
@@ -131,12 +97,10 @@ const ClientDetail: React.FC = () => {
   const loadClientDetails = async () => {
     try {
       setLoading(true);
-      const [c, logs] = await Promise.all([
-        getClientDetails(clientId!),
-        getClientUsageLogs(clientId!)
+      const [c] = await Promise.all([
+        getClientDetails(clientId!)
       ]);
       setClient(c);
-      setUsageLogs(logs.slice(0, 50));
     } catch {
       toast.error('Failed to load client details');
       navigate('/super-admin/clients');
@@ -220,40 +184,32 @@ const ClientDetail: React.FC = () => {
     setNewBranchPhone('');
   };
 
-  const handleUpdateRolePermissions = (role: string, module: string, has: boolean) => {
-    setRolePermissions(prev => {
-      const copy = { ...prev };
-      copy[role] = has
-        ? Array.from(new Set([...copy[role], module]))
-        : copy[role].filter(m => m !== module);
-      return copy;
-    });
-    toast.success(`Updated ${role} → ${module}`);
+  // Unused function
+  // const handleUpdateRolePermissions = (role: string, module: string, has: boolean) => {...};
+
+  const getStatusColor = (s: string) => {
+    const statusMap: Record<string, string> = {
+      active: 'bg-green-100 text-green-800',
+      inactive: 'bg-gray-100 text-gray-800',
+      trial: 'bg-orange-100 text-orange-800',
+      suspended: 'bg-red-100 text-red-800'
+    };
+    return statusMap[s] || 'bg-gray-100 text-gray-800';
   };
 
-  const getStatusColor = (s: string) => ({
-    active: 'bg-green-100 text-green-800',
-    inactive: 'bg-gray-100 text-gray-800',
-    trial: 'bg-orange-100 text-orange-800',
-    suspended: 'bg-red-100 text-red-800'
-  }[s as keyof any] || 'bg-gray-100 text-gray-800');
+  const getPlanColor = (p: string) => {
+    const planMap: Record<string, string> = {
+      free: 'bg-gray-100 text-gray-800',
+      basic: 'bg-blue-100 text-blue-800',
+      professional: 'bg-purple-100 text-purple-800',
+      enterprise: 'bg-indigo-100 text-indigo-800'
+    };
+    return planMap[p] || 'bg-gray-100 text-gray-800';
+  };
 
-  const getPlanColor = (p: string) => ({
-    free: 'bg-gray-100 text-gray-800',
-    basic: 'bg-blue-100 text-blue-800',
-    professional: 'bg-purple-100 text-purple-800',
-    enterprise: 'bg-indigo-100 text-indigo-800'
-  }[p as keyof any] || 'bg-gray-100 text-gray-800');
-
-  const getPaymentStatusColor = (st: string) => ({
-    paid: 'bg-green-100 text-green-800',
-    pending: 'bg-yellow-100 text-yellow-800',
-    failed: 'bg-red-100 text-red-800',
-    refunded: 'bg-purple-100 text-purple-800'
-  }[st as keyof any] || 'bg-gray-100 text-gray-800');
-
-  const getInitials = (name: string) =>
-    name.split(' ').map(w => w[0]).join('').toUpperCase();
+  // Unused function
+  // const getPaymentStatusColor = (st: string) => {...};
+  // const getInitials = (name: string) => {...};
 
   if (loading) {
     return (
