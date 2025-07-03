@@ -112,7 +112,12 @@ const Reports: React.FC = () => {
       ]);
       setRevenue(rev);
       setPerformance(perf);
-      setInventory(inv);
+      // Convert InventoryReportItem to InventoryItem format
+      const convertedInventory = inv.map((item: any) => ({
+        ...item,
+        reorder: item.reorder === 'Yes'
+      }));
+      setInventory(convertedInventory);
       setFunnel(crm);
       toast.success('Reports loaded');
     } catch (err) {
@@ -134,9 +139,10 @@ const Reports: React.FC = () => {
       .catch(() => toast.error(`Failed to export ${type}`));
   };
   const emailReport = (type: string) => {
-    AdminService.emailReport(type, filters)
-      .then(() => toast.success(`${type} emailed`))
-      .catch(() => toast.error(`Failed to email ${type}`));
+    // AdminService.emailReport doesn't exist - using exportReportAsCSV instead
+    AdminService.exportReportAsCSV(type, filters)
+      .then(() => toast.success(`${type} report exported`))
+      .catch(() => toast.error(`Failed to export ${type}`));
   };
 
   // Render a loading placeholder

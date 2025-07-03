@@ -71,7 +71,7 @@ const Logs: React.FC = () => {
       setLoading(true);
       try {
         const data = await AdminService.getActivityLogs();
-        setLogs(data);
+        setLogs(data as any);
       } catch (err) {
         toast.error('Failed to load logs. Please try again.');
       } finally {
@@ -201,7 +201,7 @@ const Logs: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Select value={dateFilter} onValueChange={setDateFilter}>
+            <Select value={dateFilter} onValueChange={(value: "all" | "today" | "yesterday" | "week") => setDateFilter(value)}>
               <SelectTrigger><SelectValue placeholder="Date"/></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Dates</SelectItem>

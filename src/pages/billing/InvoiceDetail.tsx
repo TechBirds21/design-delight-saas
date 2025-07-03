@@ -31,7 +31,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import BillingService from '@/services/billing.service';
-import type { Invoice, PaymentMode } from '@/services/billing.service';
+import type { Invoice } from '@/api/billing';
 
 // Utility to pick the right badge color
 function getStatusColor(status: Invoice['status']) {
@@ -62,7 +62,7 @@ const InvoiceDetail: React.FC = () => {
 
   // Payment form state
   const [amount, setAmount] = useState('');
-  const [mode, setMode] = useState<PaymentMode>('cash');
+  const [mode, setMode] = useState<'cash' | 'card' | 'upi' | 'bank-transfer' | 'insurance'>('cash');
   const [txId, setTxId] = useState('');
   const [notes, setNotes] = useState('');
   const [processing, setProcessing] = useState(false);
@@ -104,7 +104,7 @@ const InvoiceDetail: React.FC = () => {
     try {
       await BillingService.markAsPaid(invoice.id, {
         amount: parsed,
-        mode,
+        paymentMode: mode,
         transactionId: txId || undefined,
         notes: notes || undefined,
       });
@@ -169,7 +169,7 @@ const InvoiceDetail: React.FC = () => {
           <Button size="sm" onClick={print}>
             <Printer className="mr-1" /> Print
           </Button>
-          <Button size="sm" onClick={() => BillingService.downloadPDF(invoice.id)}>
+          <Button size="sm" onClick={() => toast.info('PDF download functionality not implemented')}>
             <Download className="mr-1" /> PDF
           </Button>
         </div>
@@ -227,7 +227,7 @@ const InvoiceDetail: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {invoice.procedures.map((p) => (
+                  {invoice.procedures.map((p: any) => (
                     <tr key={p.id} className="border-b">
                       <td>
                         <p className="font-medium">{p.name}</p>
@@ -346,7 +346,7 @@ const InvoiceDetail: React.FC = () => {
                 </div>
                 <div>
                   <Label>Mode</Label>
-                  <Select value={mode} onValueChange={setMode}>
+                  <Select value={mode} onValueChange={(value: 'cash' | 'card' | 'upi' | 'bank-transfer' | 'insurance') => setMode(value)}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>

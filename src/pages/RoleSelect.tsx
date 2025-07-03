@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -30,7 +29,6 @@ const RoleSelect: React.FC = () => {
   const { tenantName, enabledModules } = useTenant();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
   const roleOptions: RoleOption[] = [
     {
@@ -112,7 +110,6 @@ const RoleSelect: React.FC = () => {
   );
 
   const handleRoleSelect = (role: RoleOption) => {
-    setSelectedRole(role.id);
     navigate(role.path);
     toast.success(`Accessing ${role.name} dashboard`);
   };

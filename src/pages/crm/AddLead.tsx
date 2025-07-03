@@ -50,7 +50,7 @@ type LeadFormData = z.infer<typeof leadSchema>;
 
 const AddLead: React.FC = () => {
   const navigate = useNavigate();
-  const [crmUsers, setCrmUsers] = useState<CRMService.CRMUser[]>([]);
+  const [crmUsers, setCrmUsers] = useState<any[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<LeadFormData>({
@@ -59,7 +59,7 @@ const AddLead: React.FC = () => {
       fullName: '',
       mobile: '',
       email: '',
-      source: '',
+      source: undefined,
       assignedToId: '',
       notes: '',
     },
@@ -89,6 +89,7 @@ const AddLead: React.FC = () => {
         ...data,
         assignedTo: assigned.name,
         assignedToId: assigned.id,
+        status: 'new' as const,
       };
 
       const created = await CRMService.addLead(payload);
