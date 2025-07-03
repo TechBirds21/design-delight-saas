@@ -11,8 +11,12 @@ import {
   AlertTriangle,
   CheckCircle
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const BillingDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  
   const stats = [
     { title: "Today's Revenue", value: "$2,450", icon: DollarSign, trend: "+18%" },
     { title: "Pending Invoices", value: "12", icon: FileText, trend: "+5%" },
@@ -34,6 +38,7 @@ const BillingDashboard: React.FC = () => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -157,11 +162,11 @@ const BillingDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/billing/invoices')}>
                 <FileText className="h-6 w-6" />
                 <span>Create Invoice</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/billing/payments')}>
                 <CreditCard className="h-6 w-6" />
                 <span>Process Payment</span>
               </Button>
@@ -169,7 +174,7 @@ const BillingDashboard: React.FC = () => {
                 <RefreshCw className="h-6 w-6" />
                 <span>Send Reminder</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/billing/reports')}>
                 <TrendingUp className="h-6 w-6" />
                 <span>Financial Reports</span>
               </Button>
@@ -178,6 +183,7 @@ const BillingDashboard: React.FC = () => {
         </Card>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

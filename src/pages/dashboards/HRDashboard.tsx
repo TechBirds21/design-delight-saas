@@ -31,6 +31,7 @@ import {
 import { Link } from 'react-router-dom';
 import HRService from '@/services/hr.service';
 import { toast } from 'sonner';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 interface HRStats {
   totalEmployees: number;
@@ -179,6 +180,7 @@ const HRDashboard: React.FC = () => {
   }
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Header */}
       <div className="bg-white border-b border-border px-6 py-4">
@@ -412,6 +414,7 @@ const HRDashboard: React.FC = () => {
         </div>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

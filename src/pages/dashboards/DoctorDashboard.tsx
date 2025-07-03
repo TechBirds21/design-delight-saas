@@ -25,8 +25,10 @@ import {
   CheckCircle,
   Phone
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import DoctorService from '@/services/doctor.service';
 import { Appointment, DoctorStats } from '@/api/doctor';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const DoctorDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -34,6 +36,7 @@ const DoctorDashboard: React.FC = () => {
   const [stats, setStats] = useState<DoctorStats | null>(null);
   const [filterStatus, setFilterStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadDashboardData();
@@ -83,7 +86,8 @@ const DoctorDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+    <DashboardLayout>
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -284,7 +288,7 @@ const DoctorDashboard: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-emerald-50">
+                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-emerald-50" onClick={() => navigate('/doctor/emr')}>
                     <ClipboardList className="h-6 w-6 text-emerald-600" />
                     <span className="text-sm">SOAP Notes</span>
                   </Button>
@@ -300,15 +304,15 @@ const DoctorDashboard: React.FC = () => {
                     <Camera className="h-6 w-6 text-orange-600" />
                     <span className="text-sm">Upload Image</span>
                   </Button>
-                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-green-50">
+                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-green-50" onClick={() => navigate('/doctor/patients')}>
                     <User className="h-6 w-6 text-green-600" />
                     <span className="text-sm">Patient Records</span>
                   </Button>
-                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-indigo-50">
+                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-indigo-50" onClick={() => navigate('/doctor/messages')}>
                     <MessageSquare className="h-6 w-6 text-indigo-600" />
                     <span className="text-sm">Messages</span>
                   </Button>
-                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-pink-50">
+                  <Button variant="outline" className="h-24 flex flex-col space-y-2 hover:bg-pink-50" onClick={() => navigate('/doctor/teleconsult')}>
                     <Video className="h-6 w-6 text-pink-600" />
                     <span className="text-sm">Teleconsult</span>
                   </Button>
@@ -505,6 +509,7 @@ const DoctorDashboard: React.FC = () => {
         </Tabs>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

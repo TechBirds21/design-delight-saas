@@ -12,8 +12,12 @@ import {
   Star,
   TrendingUp
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const ProceduresDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  
   const stats = [
     { title: "Total Procedures", value: "156", icon: Scissors, trend: "+12 new this week" },
     { title: "Active Protocols", value: "24", icon: PlayCircle, trend: "Currently in use" },
@@ -42,6 +46,7 @@ const ProceduresDashboard: React.FC = () => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-rose-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -211,11 +216,11 @@ const ProceduresDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/procedures/catalog')}>
                 <Plus className="h-6 w-6" />
                 <span>New Procedure</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/procedures/builder')}>
                 <BookOpen className="h-6 w-6" />
                 <span>Create Protocol</span>
               </Button>
@@ -232,6 +237,7 @@ const ProceduresDashboard: React.FC = () => {
         </Card>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

@@ -12,8 +12,12 @@ import {
   Clock,
   Zap
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const TechnicianDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  
   const stats = [
     { title: "Today's Procedures", value: "8", icon: Activity, trend: "+2 from yesterday" },
     { title: "Photos Captured", value: "24", icon: Camera, trend: "Progress tracking" },
@@ -41,6 +45,7 @@ const TechnicianDashboard: React.FC = () => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -227,19 +232,19 @@ const TechnicianDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/technician/photos')}>
                 <Upload className="h-6 w-6" />
                 <span>Upload Photos</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/technician/procedures')}>
                 <Activity className="h-6 w-6" />
                 <span>Start Session</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/technician/equipment')}>
                 <Settings className="h-6 w-6" />
                 <span>Device Setup</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/technician/history')}>
                 <CheckCircle className="h-6 w-6" />
                 <span>Maintenance Log</span>
               </Button>
@@ -248,6 +253,7 @@ const TechnicianDashboard: React.FC = () => {
         </Card>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

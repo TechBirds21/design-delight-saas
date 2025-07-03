@@ -9,8 +9,12 @@ import {
   CheckCircle,
   Phone
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const ReceptionDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  
   const stats = [
     { title: "Today's Appointments", value: "24", icon: Calendar, trend: "+12%" },
     { title: "Checked In", value: "18", icon: CheckCircle, trend: "+8%" },
@@ -32,6 +36,7 @@ const ReceptionDashboard: React.FC = () => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -145,15 +150,15 @@ const ReceptionDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/reception/register')}>
                 <UserPlus className="h-6 w-6" />
                 <span>Patient Registration</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/reception/appointments')}>
                 <Calendar className="h-6 w-6" />
                 <span>Book Appointment</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/reception/checkin')}>
                 <CheckCircle className="h-6 w-6" />
                 <span>Check-In Patient</span>
               </Button>
@@ -166,6 +171,7 @@ const ReceptionDashboard: React.FC = () => {
         </Card>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

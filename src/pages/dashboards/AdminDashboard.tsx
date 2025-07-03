@@ -11,8 +11,12 @@ import {
   Database,
   Activity
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const AdminDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  
   const stats = [
     { title: "Total Users", value: "48", icon: Users, trend: "+5 this week" },
     { title: "Active Sessions", value: "32", icon: Activity, trend: "Real-time" },
@@ -41,6 +45,7 @@ const AdminDashboard: React.FC = () => {
   ];
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-slate-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -195,19 +200,19 @@ const AdminDashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/admin/users')}>
                 <UserPlus className="h-6 w-6" />
                 <span>Add User</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/admin/roles')}>
                 <Shield className="h-6 w-6" />
                 <span>Manage Roles</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/admin/settings')}>
                 <Settings className="h-6 w-6" />
                 <span>System Settings</span>
               </Button>
-              <Button variant="outline" className="h-20 flex flex-col space-y-2">
+              <Button variant="outline" className="h-20 flex flex-col space-y-2" onClick={() => navigate('/admin/branches')}>
                 <Building2 className="h-6 w-6" />
                 <span>Branch Settings</span>
               </Button>
@@ -216,6 +221,7 @@ const AdminDashboard: React.FC = () => {
         </Card>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

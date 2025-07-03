@@ -5,11 +5,13 @@ import PrescriptionFulfillment from '@/components/pharmacy/PrescriptionFulfillme
 import InventoryManagement from '@/components/pharmacy/InventoryManagement';
 import PharmacyAnalytics from '@/components/pharmacy/PharmacyAnalytics';
 import QuickActions from '@/components/pharmacy/QuickActions';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 const PharmacyDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-cyan-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
@@ -57,6 +59,7 @@ const PharmacyDashboard: React.FC = () => {
         </Tabs>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 
