@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { TenantProvider } from './contexts/TenantContext';
 import { Toaster } from 'sonner';
 import ProtectedRoute from '@/components/routes/ProtectedRoute';
+import EmployeeDirectory from '@/pages/hr/EmployeeDirectory';
 
 // Auth & Landing Pages
 import EnhancedLogin from '@/pages/EnhancedLogin';
@@ -70,6 +71,24 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute requiredModule="hr">
                     <HRDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/hr/employees" 
+                element={
+                  <ProtectedRoute requiredModule="hr">
+                    <EmployeeDirectory />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/hr/employees/:id" 
+                element={
+                  <ProtectedRoute requiredModule="hr">
+                    <div className="p-6"><h1>Employee Profile - Coming Soon</h1></div>
                   </ProtectedRoute>
                 } 
               />
