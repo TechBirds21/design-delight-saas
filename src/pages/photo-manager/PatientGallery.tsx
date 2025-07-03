@@ -16,21 +16,21 @@ import {
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from '@/components/ui/dialog';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
-import { getPatientDetails } from '@/api/doctor';
-import { getAllPatientPhotos, getPhotoSessions, deletePhoto } from '@/api/photos';
+// import { getPatientDetails } from '@/api/doctor';
+// import { getAllPatientPhotos, getPhotoSessions, deletePhoto } from '@/api/photos';
 import type { PatientPhoto, PhotoSession } from '@/api/photos';
 import DoctorService from '@/services/doctor.service';
 import PhotoService from '@/services/photo.service';

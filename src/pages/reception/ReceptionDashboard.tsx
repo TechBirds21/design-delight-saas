@@ -52,7 +52,7 @@ interface StatsCardProps {
   title: string;
   value: number;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: any;
   color: 'blue' | 'green' | 'purple' | 'orange';
   href?: string;
 }

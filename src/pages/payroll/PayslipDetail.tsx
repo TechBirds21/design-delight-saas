@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -15,7 +15,7 @@ import {
   CreditCard,
   CheckCircle
 } from 'lucide-react';
-import { getPayslipDetails, downloadPayslip } from '@/api/payroll';
+// import { getPayslipDetails, downloadPayslip } from '@/api/payroll';
 import type { Payslip } from '@/api/payroll';
 import { toast } from 'sonner';
 import PayrollService from '@/services/payroll.service';

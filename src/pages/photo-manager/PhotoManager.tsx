@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -9,22 +9,20 @@ import {
   Image, 
   Upload, 
   Search, 
-  Filter,
   Eye,
   Calendar,
   User,
-  Clock,
   Plus,
   RefreshCw
 } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { getPhotoSessions, getPhotoStats } from '@/api/photos';
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from '@/components/ui/select';
+// import { getPhotoSessions, getPhotoStats } from '@/api/photos';
 import type { PhotoSession, PhotoStats } from '@/api/photos';
 import { toast } from 'sonner';
 import PhotoService from '@/services/photo.service';
@@ -33,7 +31,7 @@ interface StatsCardProps {
   title: string;
   value: number;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: any;
   color: 'blue' | 'green' | 'purple' | 'orange';
   href?: string;
 }
