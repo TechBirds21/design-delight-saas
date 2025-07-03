@@ -11,11 +11,11 @@ import {
   TrendingDown,
   Plus,
   Search, 
-  Filter,
+  // Filter,
   Eye,
-  Edit,
+  // Edit,
   RefreshCw,
-  DollarSign,
+  // DollarSign,
   BarChart3
 } from 'lucide-react';
 import {
@@ -31,7 +31,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   BarChart,
@@ -45,16 +45,49 @@ import {
   Pie,
   Cell
 } from 'recharts';
-import { getProducts, getInventoryStats, addStock, getInventoryLogs } from '@/api/inventory';
-import type { Product, InventoryStats, InventoryLog } from '@/api/inventory';
+// import { getProducts, getInventoryStats, addStock, getInventoryLogs } from '@/api/inventory';
+// import type { Product, InventoryStats, InventoryLog } from '@/api/inventory';
 import { toast } from 'sonner';
 import InventoryService from '@/services/inventory.service';
+
+// Temporary types until API is properly defined
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  currentStock: number;
+  minStockLevel: number;
+  maxStockLevel: number;
+  unit: string;
+  costPrice: number;
+  vendor: string;
+  batchNumber: string;
+  expiryDate?: string;
+  lastUsed?: string;
+}
+
+interface InventoryStats {
+  totalProducts: number;
+  lowStockAlerts: number;
+  expiringSoon: number;
+  autoDeductToday: number;
+  totalValue: number;
+  categoriesCount: number;
+}
+
+// interface InventoryLog {
+//   id: string;
+//   action: string;
+//   timestamp: string;
+//   user: string;
+//   details: string;
+// }
 
 interface StatsCardProps {
   title: string;
   value: string | number;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<any>;
   color: 'blue' | 'red' | 'orange' | 'green';
   href?: string;
 }
@@ -69,7 +102,7 @@ const Inventory: React.FC = () => {
     totalValue: 0,
     categoriesCount: 0
   });
-  const [logs, setLogs] = useState<InventoryLog[]>([]);
+  // const [logs] = useState<InventoryLog[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [stockLevelFilter, setStockLevelFilter] = useState('all');
@@ -90,18 +123,18 @@ const Inventory: React.FC = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [productsData, statsData, logsData] = await Promise.all([
+      const [productsData, statsData] = await Promise.all([
         InventoryService.getProducts({ 
           search: searchTerm, 
-          category: categoryFilter !== 'all' ? categoryFilter : undefined, 
-          stockLevel: stockLevelFilter !== 'all' ? stockLevelFilter : undefined 
+          category: categoryFilter !== 'all' ? categoryFilter : undefined,
+          stockLevel: stockLevelFilter as 'all' | 'low' | 'normal' | 'high' !== 'all' ? stockLevelFilter as 'low' | 'normal' | 'high' : undefined
         }),
         InventoryService.getInventoryStats(),
-        InventoryService.getInventoryLogs()
+        // InventoryService.getInventoryLogs()
       ]);
       setProducts(productsData);
       setStats(statsData);
-      setLogs(logsData.slice(0, 10)); // Show only recent 10 logs
+        // setLogs(logsData.slice(0, 10)); // Show only recent 10 logs
     } catch (error) {
       toast.error('Failed to load inventory data');
       console.error('Error loading inventory data:', error);
@@ -115,7 +148,7 @@ const Inventory: React.FC = () => {
       const productsData = await InventoryService.getProducts({ 
         search: searchTerm, 
         category: categoryFilter !== 'all' ? categoryFilter : undefined,
-        stockLevel: stockLevelFilter !== 'all' ? stockLevelFilter : undefined
+        stockLevel: stockLevelFilter as 'all' | 'low' | 'normal' | 'high' !== 'all' ? stockLevelFilter as 'low' | 'normal' | 'high' : undefined
       });
       setProducts(productsData);
     } catch (error) {
@@ -177,7 +210,7 @@ const Inventory: React.FC = () => {
 
   // Chart data
   const categoryData = products.reduce((acc, product) => {
-    const existing = acc.find(item => item.category === product.category);
+    const existing = acc.find((item: any) => item.category === product.category);
     if (existing) {
       existing.count++;
       existing.value += product.currentStock * product.costPrice;

@@ -19,7 +19,7 @@ import {
   BarChart,
   CartesianGrid,
   Line,
-  LineChart,
+  // LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -38,13 +38,13 @@ import { toast } from 'sonner';
 /* ----------------------------------------------------------------------- */
 /* ----------------------------- TYPE DEFS -------------------------------- */
 /* ----------------------------------------------------------------------- */
-type LucideIcon = React.ElementType<{ size?: number; className?: string }>;
+// type LucideIcon = React.ElementType<{ size?: number; className?: string }>;
 
 interface StatsCardProps {
   title: string;
   value: string | number;
   change?: { value: string; trend: 'up' | 'down' };
-  icon: LucideIcon;
+  icon: React.ComponentType<any>;
   color: 'blue' | 'green' | 'purple' | 'orange';
   subtitle?: string;
 }
