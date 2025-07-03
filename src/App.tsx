@@ -16,6 +16,23 @@ import DoctorMessages from '@/pages/doctor/DoctorMessages';
 import DoctorAnalytics from '@/pages/doctor/DoctorAnalytics';
 import DoctorProfile from '@/pages/doctor/DoctorProfile';
 
+// Reception Pages
+import AppointmentBooking from '@/pages/reception/AppointmentBooking';
+import PatientRegister from '@/pages/reception/PatientRegister';
+import QueueManagement from '@/pages/reception/QueueManagement';
+
+// Billing Pages
+import InvoiceManagement from '@/pages/billing/InvoiceManagement';
+import PaymentProcessing from '@/pages/billing/PaymentProcessing';
+
+// HR Pages
+import AttendanceManagement from '@/pages/hr/AttendanceManagement';
+import PayrollManagement from '@/pages/hr/PayrollManagement';
+
+// Admin Pages
+import UserManagement from '@/pages/admin/UserManagement';
+import SystemSettings from '@/pages/admin/SystemSettings';
+
 // Auth & Landing Pages
 import Login from '@/pages/Login';
 import RoleLogin from '@/pages/RoleLogin';
@@ -61,12 +78,52 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/reception/appointments" 
+                element={
+                  <ProtectedRoute requiredModule="reception">
+                    <AppointmentBooking />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/reception/register" 
+                element={
+                  <ProtectedRoute requiredModule="reception">
+                    <PatientRegister />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/reception/queue" 
+                element={
+                  <ProtectedRoute requiredModule="reception">
+                    <QueueManagement />
+                  </ProtectedRoute>
+                } 
+              />
               
               <Route 
                 path="/billing" 
                 element={
                   <ProtectedRoute requiredModule="billing">
                     <BillingDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/billing/invoices" 
+                element={
+                  <ProtectedRoute requiredModule="billing">
+                    <InvoiceManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/billing/payments" 
+                element={
+                  <ProtectedRoute requiredModule="billing">
+                    <PaymentProcessing />
                   </ProtectedRoute>
                 } 
               />
@@ -170,6 +227,22 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/hr/attendance" 
+                element={
+                  <ProtectedRoute requiredModule="hr">
+                    <AttendanceManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/hr/payroll" 
+                element={
+                  <ProtectedRoute requiredModule="hr">
+                    <PayrollManagement />
+                  </ProtectedRoute>
+                } 
+              />
               
               <Route 
                 path="/hr/employees/:id" 
@@ -185,6 +258,22 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute requiredModule="admin">
                     <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/users" 
+                element={
+                  <ProtectedRoute requiredModule="admin">
+                    <UserManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/settings" 
+                element={
+                  <ProtectedRoute requiredModule="admin">
+                    <SystemSettings />
                   </ProtectedRoute>
                 } 
               />
