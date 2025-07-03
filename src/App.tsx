@@ -6,6 +6,17 @@ import { Toaster } from 'sonner';
 import ProtectedRoute from '@/components/routes/ProtectedRoute';
 import EmployeeDirectory from '@/pages/hr/EmployeeDirectory';
 
+// Doctor Pages
+import DoctorLogin from '@/pages/doctor/DoctorLogin';
+import DoctorAppointments from '@/pages/doctor/DoctorAppointments';
+import DoctorPatients from '@/pages/doctor/DoctorPatients';
+import DoctorEMR from '@/pages/doctor/DoctorEMR';
+import DoctorProcedures from '@/pages/doctor/DoctorProcedures';
+import DoctorTeleconsult from '@/pages/doctor/DoctorTeleconsult';
+import DoctorMessages from '@/pages/doctor/DoctorMessages';
+import DoctorAnalytics from '@/pages/doctor/DoctorAnalytics';
+import DoctorProfile from '@/pages/doctor/DoctorProfile';
+
 // Auth & Landing Pages
 import EnhancedLogin from '@/pages/EnhancedLogin';
 import NotFound from '@/pages/NotFound';
@@ -62,6 +73,83 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <DoctorDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/login" 
+                element={<DoctorLogin />} 
+              />
+              
+              <Route 
+                path="/doctor/appointments" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorAppointments />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/patients" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorPatients />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/emr/:patientId?" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorEMR />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/procedures" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorProcedures />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/teleconsult" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorTeleconsult />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/messages" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorMessages />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/analytics" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorAnalytics />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/doctor/profile" 
+                element={
+                  <ProtectedRoute requiredModule="doctor">
+                    <DoctorProfile />
                   </ProtectedRoute>
                 } 
               />
