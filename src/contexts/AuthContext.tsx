@@ -18,6 +18,7 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  avatar?: string; // Add this property
   client_id?: string;
   client?: any;
 }

@@ -28,6 +28,7 @@ export interface TenantContextType {
   };
   currentBranch: string;
   enabledModules: Record<string, boolean>;
+  modulesEnabled: Record<string, boolean>; // Add this property
   rolePermissions: Record<string, string[]>;
   subscription: {
     plan: string;
@@ -68,6 +69,22 @@ export const TenantProvider: React.FC<TenantProviderProps> = ({ children }) => {
     currentUser: { name: 'User', email: 'user@example.com', avatar: undefined },
     currentBranch: 'Main Branch - Downtown Medical Center',
     enabledModules: {
+      dashboard: true,
+      patients: true,
+      appointments: true,
+      inventory: true,
+      billing: true,
+      crm: true,
+      hr: true,
+      reports: true,
+      admin: true,
+      reception: true,
+      doctor: true,
+      'photo-manager': true,
+      technician: true,
+      super_admin: true,
+    },
+    modulesEnabled: {
       dashboard: true,
       patients: true,
       appointments: true,
@@ -139,6 +156,10 @@ export const TenantProvider: React.FC<TenantProviderProps> = ({ children }) => {
           },
           currentBranch: client.main_branch || defaults.currentBranch,
           enabledModules: (client.modules_enabled || []).reduce(
+            (acc: Record<string, boolean>, m: string) => ((acc[m] = true), acc),
+            {}
+          ),
+          modulesEnabled: (client.modules_enabled || []).reduce(
             (acc: Record<string, boolean>, m: string) => ((acc[m] = true), acc),
             {}
           ),

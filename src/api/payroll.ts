@@ -77,7 +77,7 @@ const setStorageData = <T>(key: string, data: T[]): void => {
 };
 
 // Generate unique ID
-const generateId = (): string => Date.now().toString(36) + Math.random().toString(36).substr(2);
+// const generateId = (): string => Date.now().toString(36) + Math.random().toString(36).substr(2);
 
 // Initialize with some mock data if localStorage is empty
 const initializeMockData = (): void => {

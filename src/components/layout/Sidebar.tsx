@@ -35,7 +35,7 @@ import {
 interface NavigationItem {
   key: string;
   label: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<any>; // Change this to accept any props
   href: string;
   description: string;
 }

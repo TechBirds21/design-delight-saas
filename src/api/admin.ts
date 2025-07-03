@@ -211,7 +211,7 @@ const generateStaffPerformanceReport = (filters: ReportFilters): StaffPerformanc
 };
 
 // Generate mock inventory report
-const generateInventoryReport = (filters: ReportFilters): InventoryReportItem[] => {
+const generateInventoryReport = (_filters: ReportFilters): InventoryReportItem[] => {
   const inventoryItems = [
     'Laser Gel',
     'PRP Tubes',
@@ -237,7 +237,7 @@ const generateInventoryReport = (filters: ReportFilters): InventoryReportItem[] 
 };
 
 // Generate mock CRM report
-const generateCRMReport = (filters: ReportFilters): CRMReportItem[] => {
+const generateCRMReport = (_filters: ReportFilters): CRMReportItem[] => {
   const leads = 100 + Math.floor(Math.random() * 50);
   const contacted = Math.floor(leads * (0.6 + Math.random() * 0.3));
   const consulted = Math.floor(contacted * (0.6 + Math.random() * 0.3));
@@ -367,7 +367,7 @@ export const getActivityLogs = async (filters: LogFilters = {}): Promise<Activit
   });
 };
 
-export const exportReportAsCSV = async (type: string, filters: ReportFilters = {}): Promise<{ url: string }> => {
+export const exportReportAsCSV = async (type: string, _filters: ReportFilters = {}): Promise<{ url: string }> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       // In a real app, this would generate a CSV file and return a download URL

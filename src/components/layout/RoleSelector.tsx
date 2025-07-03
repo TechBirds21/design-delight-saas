@@ -90,7 +90,7 @@ const RoleSelector: React.FC = () => {
   ];
 
   const availableRoles = roleOptions.filter((role) =>
-    modulesEnabled.includes(role.id) ||
+    modulesEnabled[role.id] ||
     role.id === 'admin' ||
     (role.id === 'super_admin' && user?.role === 'super_admin')
   );

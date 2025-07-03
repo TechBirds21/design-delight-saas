@@ -641,7 +641,7 @@ export const getCRMStats = async (): Promise<CRMStats> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const leads = getStorageData<Lead>(STORAGE_KEYS.LEADS);
-      const convertedLeads = getStorageData<ConvertedLead>(STORAGE_KEYS.CONVERTED_LEADS);
+      // const _convertedLeads = getStorageData<ConvertedLead>(STORAGE_KEYS.CONVERTED_LEADS);
       
       const totalLeads = leads.length;
       const converted = leads.filter(l => l.status === 'converted').length;
