@@ -4,76 +4,25 @@ import { AuthProvider } from './contexts/AuthContext';
 import { TenantProvider } from './contexts/TenantContext';
 import { Toaster } from 'sonner';
 import ProtectedRoute from '@/components/routes/ProtectedRoute';
-import RoleSelect from '@/pages/RoleSelect';
 
-// Import all pages
-import Dashboard from '@/pages/Dashboard';
-import Patients from '@/pages/Patients';
-import Appointments from '@/pages/Appointments';
-import Inventory from '@/pages/Inventory';
-import Billing from '@/pages/Billing';
-
-// Billing pages
-import InvoiceDetail from '@/pages/billing/InvoiceDetail';
-
-// Inventory pages
-import ProductDetail from '@/pages/inventory/ProductDetail';
-
-// import CRM from '@/pages/CRM';
-import HR from '@/pages/HR';
-import Payroll from '@/pages/Payroll';
-import Reports from '@/pages/Reports';
-import Admin from '@/pages/Admin';
-import AdminReports from '@/pages/admin/Reports';
-import AdminLogs from '@/pages/admin/Logs';
-import SuperAdmin from '@/pages/super-admin/SuperAdmin';
-import ClientList from '@/pages/super-admin/ClientList';
-import ClientDetail from '@/pages/super-admin/ClientDetail';
-import ClientNew from '@/pages/super-admin/ClientNew';
-import SuperAdminLogs from '@/pages/super-admin/Logs';
-import Support from '@/pages/super-admin/Support';
+// Auth & Landing Pages
 import EnhancedLogin from '@/pages/EnhancedLogin';
-import Signup from '@/pages/Signup';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
-
-// CRM pages
-import CRMDashboard from '@/pages/crm/CRMDashboard';
-import AddLead from '@/pages/crm/AddLead';
-import LeadDetail from '@/pages/crm/LeadDetail';
-import ConvertedLeads from '@/pages/crm/ConvertedLeads';
-
-// HR pages
-import StaffProfile from '@/pages/hr/StaffProfile';
-
-// Payroll pages
-import PayslipDetail from '@/pages/payroll/PayslipDetail';
-
-// Reception pages
-import ReceptionDashboard from '@/pages/reception/ReceptionDashboard';
-import PatientRegister from '@/pages/reception/PatientRegister';
-import AppointmentBooking from '@/pages/reception/AppointmentBooking';
-import QueueManagement from '@/pages/reception/QueueManagement';
-import ConsentForm from '@/pages/reception/ConsentForm';
-
-// Doctor pages
-import DoctorDashboard from '@/pages/doctor/DoctorDashboard';
-import PatientDetails from '@/pages/doctor/PatientDetails';
-import SOAPNote from '@/pages/doctor/SOAPNote';
-import TreatmentHistory from '@/pages/doctor/TreatmentHistory';
-import UploadPhoto from '@/pages/doctor/UploadPhoto';
-
-// Photo Manager pages
-import PhotoManager from '@/pages/photo-manager/PhotoManager';
-import PhotoUpload from '@/pages/photo-manager/PhotoUpload';
-import PatientGallery from '@/pages/photo-manager/PatientGallery';
-
-// Technician pages
-import TechnicianDashboard from '@/pages/technician/TechnicianDashboard';
-import ProcedureDetail from '@/pages/technician/ProcedureDetail';
-import SessionHistory from '@/pages/technician/SessionHistory';
-
 import Index from '@/pages/Index';
+
+// Role-Based Dashboards
+import ReceptionDashboard from '@/pages/dashboards/ReceptionDashboard';
+import BillingDashboard from '@/pages/dashboards/BillingDashboard';
+import DoctorDashboard from '@/pages/dashboards/DoctorDashboard';
+import HRDashboard from '@/pages/dashboards/HRDashboard';
+import AdminDashboard from '@/pages/dashboards/AdminDashboard';
+import PharmacyDashboard from '@/pages/dashboards/PharmacyDashboard';
+import TechnicianDashboard from '@/pages/dashboards/TechnicianDashboard';
+import ProceduresDashboard from '@/pages/dashboards/ProceduresDashboard';
+
+// Super Admin Console
+import SuperAdminDashboard from '@/pages/enhanced-dashboards/SuperAdminDashboard';
 
 const App: React.FC = () => {
   return (
@@ -87,20 +36,8 @@ const App: React.FC = () => {
               
               {/* Auth Routes */}
               <Route path="/login" element={<EnhancedLogin />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/select-role" element={<RoleSelect />} />
               
-              {/* Direct dashboard routes (no app layout) */}
-              <Route 
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute requiredModule="dashboard">
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Reception Module */}
+              {/* Role-Based Dashboards */}
               <Route 
                 path="/reception" 
                 element={
@@ -109,40 +46,16 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              
               <Route 
-                path="/reception/patient-register" 
+                path="/billing" 
                 element={
-                  <ProtectedRoute requiredModule="reception">
-                    <PatientRegister />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/reception/appointments" 
-                element={
-                  <ProtectedRoute requiredModule="reception">
-                    <AppointmentBooking />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/reception/queue" 
-                element={
-                  <ProtectedRoute requiredModule="reception">
-                    <QueueManagement />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/reception/consent-form" 
-                element={
-                  <ProtectedRoute requiredModule="reception">
-                    <ConsentForm />
+                  <ProtectedRoute requiredModule="billing">
+                    <BillingDashboard />
                   </ProtectedRoute>
                 } 
               />
               
-              {/* Doctor Module */}
               <Route 
                 path="/doctor" 
                 element={
@@ -151,66 +64,34 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              
               <Route 
-                path="/doctor/patient/:id" 
+                path="/hr" 
                 element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <PatientDetails />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/doctor/soap/:id" 
-                element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <SOAPNote />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/doctor/treatment-history" 
-                element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <TreatmentHistory />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/doctor/upload-photo/:id" 
-                element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <UploadPhoto />
-                  </ProtectedRoute>
-                } 
-              />
-
-              {/* Photo Manager Module */}
-              <Route 
-                path="/photo-manager" 
-                element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <PhotoManager />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/photo-manager/upload/:patientId" 
-                element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <PhotoUpload />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/photo-manager/patient/:patientId" 
-                element={
-                  <ProtectedRoute requiredModule="doctor">
-                    <PatientGallery />
+                  <ProtectedRoute requiredModule="hr">
+                    <HRDashboard />
                   </ProtectedRoute>
                 } 
               />
               
-              {/* Technician Module */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute requiredModule="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/inventory" 
+                element={
+                  <ProtectedRoute requiredModule="inventory">
+                    <PharmacyDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              
               <Route 
                 path="/technician" 
                 element={
@@ -219,229 +100,22 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              
               <Route 
-                path="/technician/procedure/:id" 
+                path="/procedures" 
                 element={
-                  <ProtectedRoute requiredModule="technician">
-                    <ProcedureDetail />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/technician/history" 
-                element={
-                  <ProtectedRoute requiredModule="technician">
-                    <SessionHistory />
+                  <ProtectedRoute requiredModule="procedures">
+                    <ProceduresDashboard />
                   </ProtectedRoute>
                 } 
               />
               
-              {/* Patients */}
+              {/* Super Admin Console */}
               <Route 
-                path="/patients" 
-                element={
-                  <ProtectedRoute requiredModule="patients">
-                    <Patients />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Appointments */}
-              <Route 
-                path="/appointments" 
-                element={
-                  <ProtectedRoute requiredModule="appointments">
-                    <Appointments />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Inventory & Pharmacy */}
-              <Route 
-                path="/inventory" 
-                element={
-                  <ProtectedRoute requiredModule="inventory">
-                    <Inventory />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/inventory/product/:id" 
-                element={
-                  <ProtectedRoute requiredModule="inventory">
-                    <ProductDetail />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Billing */}
-              <Route 
-                path="/billing" 
-                element={
-                  <ProtectedRoute requiredModule="billing">
-                    <Billing />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/billing/invoice/:id" 
-                element={
-                  <ProtectedRoute requiredModule="billing">
-                    <InvoiceDetail />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* CRM */}
-              <Route 
-                path="/crm" 
-                element={
-                  <ProtectedRoute requiredModule="crm">
-                    <CRMDashboard />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/crm/add-lead" 
-                element={
-                  <ProtectedRoute requiredModule="crm">
-                    <AddLead />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/crm/lead/:id" 
-                element={
-                  <ProtectedRoute requiredModule="crm">
-                    <LeadDetail />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/crm/converted" 
-                element={
-                  <ProtectedRoute requiredModule="crm">
-                    <ConvertedLeads />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* HR & Payroll */}
-              <Route 
-                path="/hr" 
-                element={
-                  <ProtectedRoute requiredModule="hr">
-                    <HR />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/hr/staff/:id" 
-                element={
-                  <ProtectedRoute requiredModule="hr">
-                    <StaffProfile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/payroll" 
-                element={
-                  <ProtectedRoute requiredModule="hr">
-                    <Payroll />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/payroll/payslip/:id" 
-                element={
-                  <ProtectedRoute requiredModule="hr">
-                    <PayslipDetail />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Reports */}
-              <Route 
-                path="/reports" 
-                element={
-                  <ProtectedRoute requiredModule="reports">
-                    <Reports />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Admin */}
-              <Route 
-                path="/admin" 
-                element={
-                  <ProtectedRoute requiredModule="admin">
-                    <Admin />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/reports" 
-                element={
-                  <ProtectedRoute requiredModule="admin">
-                    <AdminReports />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin/logs" 
-                element={
-                  <ProtectedRoute requiredModule="admin">
-                    <AdminLogs />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Super Admin Module */}
-              <Route 
-                path="/super-admin" 
+                path="/superadmin" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
-                    <SuperAdmin />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/super-admin/clients" 
-                element={
-                  <ProtectedRoute requiredModule="super_admin">
-                    <ClientList />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/super-admin/clients/new" 
-                element={
-                  <ProtectedRoute requiredModule="super_admin">
-                    <ClientNew />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/super-admin/clients/:clientId" 
-                element={
-                  <ProtectedRoute requiredModule="super_admin">
-                    <ClientDetail />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/super-admin/logs" 
-                element={
-                  <ProtectedRoute requiredModule="super_admin">
-                    <SuperAdminLogs />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/super-admin/support" 
-                element={
-                  <ProtectedRoute requiredModule="super_admin">
-                    <Support />
+                    <SuperAdminDashboard />
                   </ProtectedRoute>
                 } 
               />
