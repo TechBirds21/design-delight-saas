@@ -11,7 +11,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
-        <SidebarInset className="flex-1 overflow-hidden">
+        <SidebarInset className="flex-1 w-full">
           {/* Global Header */}
           <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-2 px-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <SidebarTrigger className="-ml-1" />
@@ -19,8 +19,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </header>
           
           {/* Main Content */}
-          <main className="flex-1 overflow-y-auto">
-            <div className="container-fluid max-w-none min-h-[calc(100vh-4rem)]">
+          <main className="flex-1 w-full">
+            <div className="w-full h-full">
               {children}
             </div>
           </main>

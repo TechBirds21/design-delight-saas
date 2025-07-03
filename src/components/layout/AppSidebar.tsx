@@ -30,7 +30,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -99,7 +98,6 @@ const navigationItems = {
 };
 
 export function AppSidebar() {
-  const { state } = useSidebar();
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -174,32 +172,30 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="border-r">
-      <SidebarHeader className="p-4">
+    <Sidebar collapsible="icon" className="border-r bg-background">
+      <SidebarHeader className="p-4 border-b">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             {getRoleIcon(currentRole)}
           </div>
-          {state === 'expanded' && (
-            <div>
-              <h2 className="font-semibold text-foreground">HospVerse</h2>
-              <p className="text-xs text-muted-foreground">{getRoleDisplayName(currentRole)}</p>
-            </div>
-          )}
+          <div className="group-data-[collapsible=icon]:hidden">
+            <h2 className="font-semibold text-foreground">HospVerse</h2>
+            <p className="text-xs text-muted-foreground">{getRoleDisplayName(currentRole)}</p>
+          </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="px-2">
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <NavLink to={item.url}>
+                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
+                    <NavLink to={item.url} className="flex items-center gap-2">
                       <item.icon className="h-4 w-4" />
-                      {state === 'expanded' && <span>{item.title}</span>}
+                      <span className="group-data-[collapsible=icon]:hidden">{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -209,68 +205,67 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
-        {state === 'expanded' ? (
-          <div className="space-y-4">
-            {/* User Profile */}
-            <div className="flex items-center space-x-3 p-2 rounded-lg bg-muted/50">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src={user?.avatar} />
-                <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">
-                  {user?.name || 'User'}
-                </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {user?.email || 'user@example.com'}
-                </p>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="space-y-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => navigate('/select-role')}
-              >
-                <Settings className="h-4 w-4 mr-2" />
-                Switch Role
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start text-destructive hover:text-destructive"
-                onClick={handleLogout}
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
+      <SidebarFooter className="p-4 border-t">
+        <div className="group-data-[collapsible=icon]:hidden">
+          {/* User Profile - Only show when expanded */}
+          <div className="flex items-center space-x-3 p-2 rounded-lg bg-muted/50 mb-4">
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={user?.avatar} />
+              <AvatarFallback>{user?.name?.[0] || 'U'}</AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground truncate">
+                {user?.name || 'User'}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {user?.email || 'user@example.com'}
+              </p>
             </div>
           </div>
-        ) : (
+
+          {/* Action Buttons - Only show when expanded */}
           <div className="space-y-2">
             <Button
-              variant="ghost"
-              size="icon"
+              variant="outline"
+              size="sm"
+              className="w-full justify-start"
               onClick={() => navigate('/select-role')}
-              title="Switch Role"
             >
-              <Settings className="h-4 w-4" />
+              <Settings className="h-4 w-4 mr-2" />
+              Switch Role
             </Button>
             <Button
-              variant="ghost"
-              size="icon"
+              variant="outline"
+              size="sm"
+              className="w-full justify-start text-destructive hover:text-destructive"
               onClick={handleLogout}
-              title="Logout"
-              className="text-destructive hover:text-destructive"
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
             </Button>
           </div>
-        )}
+        </div>
+
+        {/* Collapsed state buttons */}
+        <div className="group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:space-y-2 hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/select-role')}
+            title="Switch Role"
+          >
+            <Settings className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleLogout}
+            title="Logout"
+            className="text-destructive hover:text-destructive"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );

@@ -20,6 +20,7 @@ import DoctorProfile from '@/pages/doctor/DoctorProfile';
 import AppointmentBooking from '@/pages/reception/AppointmentBooking';
 import PatientRegister from '@/pages/reception/PatientRegister';
 import QueueManagement from '@/pages/reception/QueueManagement';
+import CheckInOut from '@/pages/reception/CheckInOut';
 
 // Billing Pages
 import InvoiceManagement from '@/pages/billing/InvoiceManagement';
@@ -326,7 +327,7 @@ const App: React.FC = () => {
                 path="/reception/checkin" 
                 element={
                   <ProtectedRoute requiredModule="reception">
-                    <div className="p-6"><h1>Check-in/out - Coming Soon</h1></div>
+                    <CheckInOut />
                   </ProtectedRoute>
                 } 
               />
