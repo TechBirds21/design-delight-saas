@@ -33,7 +33,7 @@ import ClientDetail from '@/pages/super-admin/ClientDetail';
 import ClientNew from '@/pages/super-admin/ClientNew';
 import SuperAdminLogs from '@/pages/super-admin/Logs';
 import Support from '@/pages/super-admin/Support';
-import Login from '@/pages/Login';
+import EnhancedLogin from '@/pages/EnhancedLogin';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
@@ -87,7 +87,7 @@ const App: React.FC = () => {
               <Route path="/" element={<Index />} />
               
               {/* Auth Routes */}
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<EnhancedLogin />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/select-role" element={<RoleSelect />} />
               
@@ -389,7 +389,7 @@ const App: React.FC = () => {
               <Route 
                 path="super-admin" 
                 element={
-                  <ProtectedRoute requiredModule="super-admin">
+                  <ProtectedRoute requiredModule="super_admin">
                     <SuperAdmin />
                   </ProtectedRoute>
                 } 
@@ -397,7 +397,7 @@ const App: React.FC = () => {
               <Route 
                 path="super-admin/clients" 
                 element={
-                  <ProtectedRoute requiredModule="super-admin">
+                  <ProtectedRoute requiredModule="super_admin">
                     <ClientList />
                   </ProtectedRoute>
                 } 
@@ -405,7 +405,7 @@ const App: React.FC = () => {
               <Route 
                 path="super-admin/clients/new" 
                 element={
-                  <ProtectedRoute requiredModule="super-admin">
+                  <ProtectedRoute requiredModule="super_admin">
                     <ClientNew />
                   </ProtectedRoute>
                 } 
@@ -413,7 +413,7 @@ const App: React.FC = () => {
               <Route 
                 path="super-admin/clients/:clientId" 
                 element={
-                  <ProtectedRoute requiredModule="super-admin">
+                  <ProtectedRoute requiredModule="super_admin">
                     <ClientDetail />
                   </ProtectedRoute>
                 } 
@@ -421,7 +421,7 @@ const App: React.FC = () => {
               <Route 
                 path="super-admin/logs" 
                 element={
-                  <ProtectedRoute requiredModule="super-admin">
+                  <ProtectedRoute requiredModule="super_admin">
                     <SuperAdminLogs />
                   </ProtectedRoute>
                 } 
@@ -429,7 +429,7 @@ const App: React.FC = () => {
               <Route 
                 path="super-admin/support" 
                 element={
-                  <ProtectedRoute requiredModule="super-admin">
+                  <ProtectedRoute requiredModule="super_admin">
                     <Support />
                   </ProtectedRoute>
                 } 

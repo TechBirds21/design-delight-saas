@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
-import axios from 'axios';
+// import axios from 'axios'; // Removed as we're using mock data
 import { useAuth } from '@/contexts/AuthContext';
 
 export interface TenantContextType {
@@ -131,61 +131,58 @@ export const TenantProvider: React.FC<TenantProviderProps> = ({ children }) => {
   useEffect(() => {
     const loadTenant = async () => {
       try {
-        // Fetch tenant (modules & settings)
-        const { data: client } = await axios.get('/api/tenant', {
-          headers: { Host: window.location.host },
-        });
-
-        // Optionally fetch per-user overrides
-        let userPerms: Record<string, string[]> = {};
-        if (user) {
-          const { data: profile } = await axios.get('/api/profile', {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-          });
-          userPerms = profile.role_permissions || {};
-        }
+        // Use mock data for SaaS tenant functionality
+        const mockClient = {
+          name: user?.client?.name || 'SkinClinic Pro',
+          logo: user?.client?.logo || 'https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg',
+          main_branch: 'Main Branch - Downtown Medical Center',
+          modules_enabled: user?.client?.modules_enabled || [
+            'dashboard', 'patients', 'appointments', 'inventory', 'billing', 
+            'crm', 'hr', 'reports', 'admin', 'reception', 'doctor', 
+            'photo-manager', 'technician', 'super_admin'
+          ],
+          role_permissions: user?.client?.role_permissions || defaults.rolePermissions,
+          plan: user?.client?.plan || 'Professional',
+          status: user?.client?.status || 'active',
+          expires_at: '2024-12-31',
+          features: {
+            multiLocation: true,
+            advancedReporting: true,
+            apiAccess: true,
+            customBranding: true,
+          }
+        };
 
         setData({
-          tenantName: client.name,
-          tenantLogoURL: client.logo || defaults.tenantLogoURL,
+          tenantName: mockClient.name,
+          tenantLogoURL: mockClient.logo,
           currentRole: (user?.role as any) || defaults.currentRole,
           currentUser: {
             name: user?.name || defaults.currentUser.name,
             email: user?.email || defaults.currentUser.email,
             avatar: user?.avatar || defaults.currentUser.avatar,
           },
-          currentBranch: client.main_branch || defaults.currentBranch,
-          enabledModules: (client.modules_enabled || []).reduce(
+          currentBranch: mockClient.main_branch,
+          enabledModules: mockClient.modules_enabled.reduce(
             (acc: Record<string, boolean>, m: string) => ((acc[m] = true), acc),
             {}
           ),
-          modulesEnabled: (client.modules_enabled || []).reduce(
+          modulesEnabled: mockClient.modules_enabled.reduce(
             (acc: Record<string, boolean>, m: string) => ((acc[m] = true), acc),
             {}
           ),
-          rolePermissions:
-            Object.keys(userPerms).length > 0
-              ? userPerms
-              : client.role_permissions || defaults.rolePermissions,
+          rolePermissions: mockClient.role_permissions,
           subscription: {
-            plan: client.plan,
-            status: client.status,
-            expiresAt: client.expires_at,
+            plan: mockClient.plan,
+            status: mockClient.status,
+            expiresAt: mockClient.expires_at,
           },
-          features: {
-            multiLocation:
-              client.features?.multiLocation ?? defaults.features.multiLocation,
-            advancedReporting:
-              client.features?.advancedReporting ??
-              defaults.features.advancedReporting,
-            apiAccess: client.features?.apiAccess ?? defaults.features.apiAccess,
-            customBranding:
-              client.features?.customBranding ??
-              defaults.features.customBranding,
-          },
+          features: mockClient.features,
         });
       } catch (err) {
         console.error('Error loading tenant data', err);
+        // Fall back to defaults
+        setData(defaults);
       } finally {
         setLoading(false);
       }
