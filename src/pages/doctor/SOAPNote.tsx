@@ -1,13 +1,13 @@
 // src/pages/doctor/SOAPNote.tsx
 
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+// import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -31,7 +31,6 @@ import {
 } from '@/components/ui/form';
 import { 
   ArrowLeft, 
-  FileText, 
   ChevronDown, 
   ChevronRight,
   Save,

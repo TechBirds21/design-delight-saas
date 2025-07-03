@@ -131,7 +131,7 @@ const UploadPhoto: React.FC = () => {
         form.append('patientId', id);
         form.append('type', photoType);
         form.append('sessionId', sessionId);
-        return PhotoService.uploadPhoto(form);
+        return PhotoService.uploadPatientPhoto(form);
       }));
 
       toast.success(

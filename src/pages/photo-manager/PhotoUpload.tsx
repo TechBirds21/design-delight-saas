@@ -23,8 +23,8 @@ import {
   Image as ImageIcon,
   Trash2
 } from 'lucide-react';
-import { getPatientDetails } from '@/api/doctor';
-import { uploadPatientPhoto } from '@/api/photos';
+// import { getPatientDetails } from '@/api/doctor';
+// import { uploadPatientPhoto } from '@/api/photos';
 import { toast } from 'sonner';
 import DoctorService from '@/services/doctor.service';
 import PhotoService from '@/services/photo.service';
@@ -296,11 +296,9 @@ const PhotoUpload: React.FC = () => {
                 <p className="text-sm text-gray-600 mb-4">
                   For demo purposes, photos will be uploaded for a sample patient.
                 </p>
-                <Button asChild className="w-full">
-                  <Link to="/patients">
+                <Button className="w-full">
                     <User size={16} className="mr-2" />
                     Select from Patients
-                  </Link>
                 </Button>
               </CardContent>
             </Card>

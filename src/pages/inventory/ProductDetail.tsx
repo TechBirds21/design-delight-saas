@@ -8,12 +8,8 @@ import { Label } from '@/components/ui/label';
 import { 
   ArrowLeft, 
   Package, 
-  AlertTriangle, 
-  Calendar, 
-  DollarSign,
   MapPin,
   Plus,
-  Minus,
   Edit,
   Archive,
   TrendingDown,
@@ -43,7 +39,7 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
-import { getProductDetails, addStock, adjustStock, getInventoryLogs } from '@/api/inventory';
+// import { getProductDetails, addStock, adjustStock, getInventoryLogs } from '@/api/inventory';
 import type { Product, InventoryLog, StockAdjustment } from '@/api/inventory';
 import { toast } from 'sonner';
 import InventoryService from '@/services/inventory.service';
@@ -189,7 +185,7 @@ const ProductDetail: React.FC = () => {
     .filter(log => ['stock-in', 'stock-out', 'adjustment', 'auto-deduct'].includes(log.type))
     .slice(0, 10)
     .reverse()
-    .map((log, index) => ({
+    .map((log) => ({
       date: new Date(log.createdAt).toLocaleDateString(),
       stock: log.newStock,
       change: log.type === 'stock-in' || (log.type === 'adjustment' && log.newStock > log.previousStock) ? log.quantity : -log.quantity

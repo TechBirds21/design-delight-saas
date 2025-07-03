@@ -10,9 +10,9 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { Table, TableHeader, TableRow, TableCell, TableBody } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Users, CalendarDays, UserPlus, Search, ArrowRightCircle
+  Users, UserPlus, Search, ArrowRightCircle
 } from 'lucide-react';
-import { getAllStaff, getHRStats } from '@/api/hr';
+// import { getAllStaff, getHRStats } from '@/api/hr';
 import type { Staff, HRStats } from '@/api/hr';
 import HRService from '@/services/hr.service';
 import { toast } from 'sonner';

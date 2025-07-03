@@ -4,13 +4,8 @@ import {
   getStaffDetails,
   getAttendanceLog,
   uploadStaffDocument,
-  logPerformance,
   Staff,
   AttendanceRecord,
-  ShiftRecord,
-  StaffDocument,
-  PerformanceNote,
-  SalaryStructure,
 } from '@/api/hr';
 import {
   Card, CardHeader, CardContent, CardTitle
@@ -19,12 +14,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+// import { Label } from '@/components/ui/label';
 import { Calendar as CalendarWidget } from '@/components/ui/calendar';
 import { toast } from 'sonner';
 import {
   ArrowLeft, User, Mail, Phone, Calendar, Building,
-  FileText, Clock, UserCog, Edit, Upload, Download, DollarSign
+  UserCog, Edit, Upload, Download
 } from 'lucide-react';
 
 export const StaffProfile: React.FC = () => {
@@ -191,7 +186,7 @@ export const StaffProfile: React.FC = () => {
                     mode="single"
                     selected={selectedMonth}
                     onMonthChange={setSelectedMonth}
-                    disabled={(d) => false}
+                    disabled={() => false}
                     modifiers={{
                       present: d => !!attendance.find(a => a.date === d.toISOString().slice(0,10) && a.status==='present'),
                       leave:   d => !!attendance.find(a => a.date === d.toISOString().slice(0,10) && a.status==='leave'),
@@ -264,15 +259,11 @@ export const StaffProfile: React.FC = () => {
                 <CardContent className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium mb-2">By Department</p>
-                    {stats?.departmentCounts && Object.entries(stats.departmentCounts).map(([d,c]) => (
-                      <p key={d}>{d}: {c}</p>
-                    ))}
+                    <p>No department data available</p>
                   </div>
                   <div>
                     <p className="font-medium mb-2">By Branch</p>
-                    {stats?.branchCounts && Object.entries(stats.branchCounts).map(([b,c]) => (
-                      <p key={b}>{b}: {c}</p>
-                    ))}
+                    <p>No branch data available</p>
                   </div>
                 </CardContent>
               </Card>
