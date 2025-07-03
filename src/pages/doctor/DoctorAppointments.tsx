@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { 
   Calendar,
   Clock,
@@ -140,9 +141,9 @@ const DoctorAppointments: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <div className="bg-white border-b border-border px-6 py-4">
+    <DashboardLayout>
+      <div className="space-y-6 p-6">
+        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Appointments & Schedule</h1>
@@ -159,9 +160,6 @@ const DoctorAppointments: React.FC = () => {
             </Button>
           </div>
         </div>
-      </div>
-
-      <div className="p-6 space-y-6">
         {/* Filters and Search */}
         <Card className="animate-fade-in">
           <CardContent className="p-6">
@@ -384,7 +382,7 @@ const DoctorAppointments: React.FC = () => {
           </Card>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

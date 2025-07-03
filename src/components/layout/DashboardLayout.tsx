@@ -19,8 +19,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           </header>
           
           {/* Main Content */}
-          <main className="flex-1 overflow-y-auto p-0">
-            <div className="container-fluid max-w-none">
+          <main className="flex-1 overflow-y-auto">
+            <div className="container-fluid max-w-none min-h-[calc(100vh-4rem)]">
               {children}
             </div>
           </main>

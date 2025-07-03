@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -176,10 +177,10 @@ const EmployeeDirectory: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <div className="bg-white border-b border-border px-6 py-4">
-        <div className="flex items-center justify-between">
+    <DashboardLayout>
+      <div className="space-y-6 p-6">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Employee Directory</h1>
             <p className="text-muted-foreground">Manage your workforce and employee information</p>
@@ -197,9 +198,6 @@ const EmployeeDirectory: React.FC = () => {
             </Button>
           </div>
         </div>
-      </div>
-
-      <div className="p-6 space-y-6">
         {/* Search and Filters */}
         <Card className="animate-fade-in">
           <CardContent className="p-6">
@@ -492,7 +490,7 @@ const EmployeeDirectory: React.FC = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 
