@@ -96,16 +96,17 @@ export function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`relative bg-card border-2 ${plan.color} rounded-2xl p-8 ${
+              className={`relative gradient-card border-2 ${plan.color} rounded-3xl p-8 ${
                 plan.popular 
-                  ? 'shadow-2xl scale-105 bg-gradient-to-b from-card to-primary/5' 
-                  : 'shadow-lg hover:shadow-xl'
-              } transition-all duration-300 hover:-translate-y-1`}
+                  ? 'shadow-2xl scale-105 bg-gradient-to-b from-card to-primary/5 shadow-glow' 
+                  : 'shadow-large hover:shadow-xl'
+              } transition-all duration-500 hover-lift animate-fade-in`}
+              style={{ animationDelay: `${index * 0.2}s` }}
             >
               {/* Popular Badge */}
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-gradient-to-r from-primary to-accent text-white px-4 py-2 rounded-full text-sm font-medium flex items-center space-x-1 shadow-lg">
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-primary text-white px-6 py-3 rounded-full text-sm font-medium flex items-center space-x-2 shadow-glow animate-float">
                     <Star className="h-4 w-4 fill-current" />
                     <span>Most Popular</span>
                   </div>
@@ -114,11 +115,11 @@ export function Pricing() {
 
               {/* Plan Header */}
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-2 text-foreground">{plan.name}</h3>
-                <p className="text-muted-foreground mb-4">{plan.description}</p>
+                <h3 className="text-2xl font-heading font-bold mb-3 text-foreground">{plan.name}</h3>
+                <p className="text-muted-foreground mb-6">{plan.description}</p>
                 <div className="flex items-baseline justify-center">
-                  <span className="text-4xl font-bold text-primary">${plan.price}</span>
-                  <span className="text-muted-foreground ml-2">/{plan.period}</span>
+                  <span className="text-5xl font-heading font-bold text-gradient-primary">${plan.price}</span>
+                  <span className="text-muted-foreground ml-2 text-lg">/{plan.period}</span>
                 </div>
               </div>
 
@@ -134,15 +135,15 @@ export function Pricing() {
 
               {/* CTA Button */}
               <Button 
-                className={`w-full ${
+                className={`w-full h-12 text-lg font-medium ${
                   plan.popular 
-                    ? 'bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg' 
-                    : 'border border-primary text-primary hover:bg-primary hover:text-primary-foreground'
+                    ? 'bg-gradient-primary hover:bg-gradient-to-r hover:from-primary-dark hover:to-primary text-white border-0 shadow-glow hover-lift' 
+                    : 'glass border-primary/30 text-primary hover:bg-primary hover:text-white'
                 }`}
                 variant={plan.popular ? 'default' : 'outline'}
                 size="lg"
               >
-                {plan.popular && <Zap className="mr-2 h-4 w-4" />}
+                {plan.popular && <Zap className="mr-2 h-5 w-5" />}
                 {plan.cta}
               </Button>
 

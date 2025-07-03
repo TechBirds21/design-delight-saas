@@ -1,45 +1,53 @@
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <div className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              HospVerse
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div className="text-2xl font-heading font-bold text-gradient-primary">
+                HospVerse
+              </div>
             </div>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a href="#features" className="text-foreground/80 hover:text-primary transition-colors">
-                Features
-              </a>
-              <a href="#pricing" className="text-foreground/80 hover:text-primary transition-colors">
-                Pricing
-              </a>
-              <a href="#about" className="text-foreground/80 hover:text-primary transition-colors">
-                About
-              </a>
-              <a href="#contact" className="text-foreground/80 hover:text-primary transition-colors">
-                Contact
-              </a>
+              {[
+                { href: '#features', label: 'Features' },
+                { href: '#pricing', label: 'Pricing' },
+                { href: '#about', label: 'About' },
+                { href: '#contact', label: 'Contact' }
+              ].map((item) => (
+                <a 
+                  key={item.href}
+                  href={item.href} 
+                  className="text-foreground/70 hover:text-primary transition-all duration-300 font-medium relative group"
+                >
+                  {item.label}
+                  <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" className="text-foreground/70 hover:text-primary" asChild>
               <a href="/app/login">Sign In</a>
             </Button>
-            <Button variant="default" asChild>
+            <Button className="bg-gradient-primary text-white border-0 shadow-glow hover-lift" asChild>
               <a href="/app/signup">Get Started</a>
             </Button>
           </div>
@@ -50,6 +58,7 @@ export function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-foreground hover:text-primary"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -58,41 +67,28 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card/90 backdrop-blur-sm rounded-lg mt-2 border border-border">
-              <a
-                href="#features"
-                className="block px-3 py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Features
-              </a>
-              <a
-                href="#pricing"
-                className="block px-3 py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Pricing
-              </a>
-              <a
-                href="#about"
-                className="block px-3 py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </a>
-              <a
-                href="#contact"
-                className="block px-3 py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </a>
-              <div className="border-t border-border pt-3 mt-3 space-y-2">
+          <div className="md:hidden animate-fade-in">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass rounded-lg mt-2 border border-border/50">
+              {[
+                { href: '#features', label: 'Features' },
+                { href: '#pricing', label: 'Pricing' },
+                { href: '#about', label: 'About' },
+                { href: '#contact', label: 'Contact' }
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="block px-3 py-2 text-foreground/70 hover:text-primary hover:bg-primary/10 rounded-lg transition-all duration-300"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <div className="border-t border-border/50 pt-3 mt-3 space-y-2">
                 <Button variant="ghost" className="w-full justify-start" asChild>
                   <a href="/app/login">Sign In</a>
                 </Button>
-                <Button variant="default" className="w-full" asChild>
+                <Button className="w-full bg-gradient-primary text-white border-0" asChild>
                   <a href="/app/signup">Get Started</a>
                 </Button>
               </div>

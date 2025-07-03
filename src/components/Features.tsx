@@ -119,46 +119,50 @@ export function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative bg-card border border-border rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+              className="group relative gradient-card border border-border/50 rounded-2xl p-8 hover-lift transition-all duration-500"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              {/* Background Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {/* Background Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               
-              <div className="relative">
+              <div className="relative z-10">
                 {/* Icon */}
-                <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${feature.gradient} mb-6`}>
+                <div className={`inline-flex p-4 rounded-xl bg-gradient-to-r ${feature.gradient} mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
                   <feature.icon className="h-6 w-6 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-heading font-semibold mb-4 text-foreground group-hover:text-gradient-primary transition-all duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
                   {feature.description}
                 </p>
               </div>
 
               {/* Hover Effect Border */}
               <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/20 transition-colors duration-300"></div>
+              
+              {/* Shine Effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-pulse"></div>
             </div>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-2xl p-8">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <div className="text-center mt-16 animate-fade-in">
+          <div className="glass border border-primary/20 rounded-3xl p-8 max-w-4xl mx-auto hover-lift">
+            <h3 className="text-3xl font-heading font-bold mb-4 text-gradient-primary">
               Ready to Transform Your Practice?
             </h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-lg text-muted-foreground mb-8">
               Join hundreds of healthcare providers who trust HospVerse for their daily operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+              <button className="bg-gradient-primary text-white px-8 py-4 rounded-xl font-medium hover-lift shadow-glow transition-all duration-300 text-lg">
                 Start Free Trial
               </button>
-              <button className="border border-border px-8 py-3 rounded-lg font-medium hover:bg-accent/10 transition-colors">
+              <button className="glass border border-primary/30 px-8 py-4 rounded-xl font-medium hover:bg-primary/10 transition-all duration-300 text-lg">
                 Schedule Demo
               </button>
             </div>
