@@ -31,7 +31,7 @@ const DoctorLogin: React.FC = () => {
     
     try {
       // Mock login for doctor
-      await login(email, password, 'doctor');
+      await login(email, password);
       toast.success('Welcome back, Doctor!');
       navigate('/doctor');
     } catch (error) {
