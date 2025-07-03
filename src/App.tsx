@@ -33,6 +33,18 @@ import PayrollManagement from '@/pages/hr/PayrollManagement';
 import UserManagement from '@/pages/admin/UserManagement';
 import SystemSettings from '@/pages/admin/SystemSettings';
 
+// Inventory Pages  
+import InventoryProducts from '@/pages/inventory/InventoryProducts';
+import StockManagement from '@/pages/inventory/StockManagement';
+import PurchaseOrders from '@/pages/inventory/PurchaseOrders';
+
+// Technician Pages
+import TechnicianProcedures from '@/pages/technician/TechnicianProcedures';
+import EquipmentManagement from '@/pages/technician/EquipmentManagement';
+
+// HR Pages
+import PerformanceManagement from '@/pages/hr/PerformanceManagement';
+
 // Auth & Landing Pages
 import Login from '@/pages/Login';
 import RoleLogin from '@/pages/RoleLogin';
@@ -243,6 +255,14 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/hr/performance" 
+                element={
+                  <ProtectedRoute requiredModule="hr">
+                    <PerformanceManagement />
+                  </ProtectedRoute>
+                } 
+              />
               
               <Route 
                 path="/hr/employees/:id" 
@@ -277,12 +297,77 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              <Route
+                path="/admin/reports" 
+                element={
+                  <ProtectedRoute requiredModule="admin">
+                    <div className="p-6"><h1>Admin Reports - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/admin/branches" 
+                element={
+                  <ProtectedRoute requiredModule="admin">
+                    <div className="p-6"><h1>Multi-branch Management - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              
+              <Route 
+                path="/billing/reports" 
+                element={
+                  <ProtectedRoute requiredModule="billing">
+                    <div className="p-6"><h1>Billing Reports - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/reception/checkin" 
+                element={
+                  <ProtectedRoute requiredModule="reception">
+                    <div className="p-6"><h1>Check-in/out - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
               
               <Route 
                 path="/inventory" 
                 element={
                   <ProtectedRoute requiredModule="inventory">
                     <PharmacyDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/inventory/products" 
+                element={
+                  <ProtectedRoute requiredModule="inventory">
+                    <InventoryProducts />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/inventory/stock" 
+                element={
+                  <ProtectedRoute requiredModule="inventory">
+                    <StockManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/inventory/orders" 
+                element={
+                  <ProtectedRoute requiredModule="inventory">
+                    <PurchaseOrders />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/inventory/reports" 
+                element={
+                  <ProtectedRoute requiredModule="inventory">
+                    <div className="p-6"><h1>Inventory Reports - Coming Soon</h1></div>
                   </ProtectedRoute>
                 } 
               />
@@ -295,12 +380,68 @@ const App: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
+              <Route 
+                path="/technician/procedures" 
+                element={
+                  <ProtectedRoute requiredModule="technician">
+                    <TechnicianProcedures />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/technician/equipment" 
+                element={
+                  <ProtectedRoute requiredModule="technician">
+                    <EquipmentManagement />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/technician/photos" 
+                element={
+                  <ProtectedRoute requiredModule="technician">
+                    <div className="p-6"><h1>Photo Manager - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/technician/history" 
+                element={
+                  <ProtectedRoute requiredModule="technician">
+                    <div className="p-6"><h1>Session History - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
               
               <Route 
                 path="/procedures" 
                 element={
                   <ProtectedRoute requiredModule="procedures">
                     <ProceduresDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/procedures/catalog" 
+                element={
+                  <ProtectedRoute requiredModule="procedures">
+                    <div className="p-6"><h1>Procedure Catalog - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/procedures/builder" 
+                element={
+                  <ProtectedRoute requiredModule="procedures">
+                    <div className="p-6"><h1>Protocol Builder - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/procedures/templates" 
+                element={
+                  <ProtectedRoute requiredModule="procedures">
+                    <div className="p-6"><h1>Templates - Coming Soon</h1></div>
                   </ProtectedRoute>
                 } 
               />
