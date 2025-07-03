@@ -7,7 +7,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "build:dev": "vite build --mode development",
-
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -49,6 +48,7 @@
     "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.0.0",
     "input-otp": "^1.2.4",
+    "lovable-tagger": "^1.1.8",
     "lucide-react": "^0.294.0",
     "next-themes": "^0.2.1",
     "react": "^18.2.0",
