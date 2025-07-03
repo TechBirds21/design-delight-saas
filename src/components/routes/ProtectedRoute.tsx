@@ -22,9 +22,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredModul
     )
   }
 
-  // Not logged in → go to login
+  // Not logged in → go to role selection
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/select-role" replace />
   }
 
   // Tenant or role doesn't allow this module → unauthorized

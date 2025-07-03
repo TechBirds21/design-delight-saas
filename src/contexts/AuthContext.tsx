@@ -31,6 +31,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
   isAuthenticated: boolean;
+  setUser: (user: User | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -152,6 +153,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     signup,
     isAuthenticated: Boolean(user),
+    setUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

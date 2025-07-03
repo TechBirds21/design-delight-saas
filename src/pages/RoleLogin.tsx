@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 
 const loginSchema = z.object({
   email: z.string().min(1, 'Please enter username'),
@@ -81,6 +82,7 @@ const RoleLogin: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const { setUser } = useAuth(); // Get setUser from auth context
   
   const role = searchParams.get('role') as keyof typeof roleConfig;
   const config = roleConfig[role];
@@ -127,6 +129,9 @@ const RoleLogin: React.FC = () => {
         // Store tokens and user
         localStorage.setItem('token', 'demo_token');
         localStorage.setItem('currentUser', JSON.stringify(mockUser));
+        
+        // Update auth context immediately
+        setUser(mockUser);
         
         // Navigate to role-specific dashboard
         navigate(config.dashboard);
