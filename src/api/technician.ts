@@ -2,7 +2,7 @@
 // In a real application, these would make HTTP requests to your backend
 
 // Types
-interface Procedure {
+export interface Procedure {
   id: string;
   patientId: string;
   patientName: string;
@@ -23,7 +23,7 @@ interface Procedure {
   actualDuration?: number;
 }
 
-interface SessionHistoryEntry {
+export interface SessionHistoryEntry {
   id: string;
   patientId: string;
   patientName: string;
@@ -37,19 +37,19 @@ interface SessionHistoryEntry {
   notes: string;
 }
 
-interface TechnicianStats {
+export interface TechnicianStats {
   assignedToday: number;
   completedSessions: number;
   missedDelayed: number;
   totalHistory: number;
 }
 
-interface Doctor {
+export interface Doctor {
   id: number;
   name: string;
 }
 
-interface CompletionData {
+export interface CompletionData {
   notes: string;
   actualDuration?: number;
 }

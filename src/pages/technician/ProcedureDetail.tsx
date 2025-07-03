@@ -12,7 +12,6 @@ import {
   Clock, 
   Stethoscope,
   Play,
-  Square,
   CheckCircle,
   AlertCircle,
   Timer,
@@ -26,7 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { getProcedureDetails, startSession, completeSession } from '@/api/technician';
+// import { getProcedureDetails, startSession, completeSession } from '@/api/technician';
 import { toast } from 'sonner';
 import TechnicianService from '@/services/technician.service';
 

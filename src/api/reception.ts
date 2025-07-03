@@ -2,7 +2,7 @@
 // In a real application, these would make HTTP requests to your backend
 
 // Types
-interface Appointment {
+export interface Appointment {
   id: string;
   patientName: string;
   patientPhone: string;
@@ -16,7 +16,7 @@ interface Appointment {
   bookedAt?: string;
 }
 
-interface Patient {
+export interface Patient {
   id: string;
   fullName: string;
   mobile: string;
@@ -29,14 +29,14 @@ interface Patient {
   registeredAt: string;
 }
 
-interface Doctor {
+export interface Doctor {
   id: number;
   name: string;
   specialization: string;
   available: boolean;
 }
 
-interface QueueEntry {
+export interface QueueEntry {
   id: string;
   patientName: string;
   patientPhone: string;
@@ -47,7 +47,7 @@ interface QueueEntry {
   queueNumber: number;
 }
 
-interface ConsentForm {
+export interface ConsentForm {
   id: string;
   patientId: string;
   patientName: string;
@@ -57,7 +57,7 @@ interface ConsentForm {
   uploadedAt: string;
 }
 
-interface ReceptionStats {
+export interface ReceptionStats {
   todayAppointments: number;
   walkInsRegistered: number;
   patientsInQueue: number;

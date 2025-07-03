@@ -9,12 +9,10 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import {
   ArrowLeft,
-  Clock,
   Server,
   Search,
   Download,
   RefreshCw,
-  Building,
   AlertTriangle,
   Lock,
   Settings,
@@ -51,7 +49,7 @@ const Logs: React.FC = () => {
 
   // load clinics & logs
   useEffect(() => {
-    SuperAdminService.getAllClinics()
+    SuperAdminService.getAllClients()
       .then(setClinics)
       .catch(() => toast.error('Failed to load clinics'));
 

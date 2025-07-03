@@ -11,13 +11,9 @@ import {
   Clock, 
   AlertTriangle,
   Search, 
-  Filter,
   Eye,
   Play,
-  User,
-  Stethoscope,
-  Calendar,
-  Plus
+  Calendar
 } from 'lucide-react';
 import {
   Select,
@@ -26,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getAssignedProcedures, getTechnicianStats } from '@/api/technician';
+// import { getAssignedProcedures, getTechnicianStats } from '@/api/technician';
 import { toast } from 'sonner';
 import TechnicianService from '@/services/technician.service';
 
@@ -62,7 +58,7 @@ interface StatsCardProps {
   title: string;
   value: number;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: any;
   color: 'blue' | 'green' | 'orange' | 'red';
   href?: string;
 }

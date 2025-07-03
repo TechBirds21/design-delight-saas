@@ -8,8 +8,6 @@ import {
   ArrowLeft, 
   FileText, 
   Search, 
-  Filter,
-  Calendar,
   User,
   Stethoscope,
   Eye,
@@ -23,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { getSessionHistory, getProcedureTypes, getDoctors } from '@/api/technician';
+// import { getSessionHistory, getProcedureTypes, getDoctors } from '@/api/technician';
 import { toast } from 'sonner';
 import TechnicianService from '@/services/technician.service';
 

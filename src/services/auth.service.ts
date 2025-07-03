@@ -1,4 +1,4 @@
-import api from './api';
+// import api from './api';
 import { UserRole } from '../contexts/AuthContext';
 
 export interface LoginCredentials {
@@ -54,7 +54,7 @@ const AuthService = {
     return { message: 'User created successfully', user: { name: data.name, email: data.email } };
   },
   
-  refreshToken: async (refreshToken: string): Promise<RefreshTokenResponse> => {
+  refreshToken: async (): Promise<RefreshTokenResponse> => {
     // Mock refresh token response
     return {
       access_token: 'new_mock_token',

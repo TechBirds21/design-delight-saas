@@ -1,5 +1,5 @@
 import api from './api';
-import { Clinic, Branch, UsageLog, SystemLog, SupportTicket, TicketMessage, SuperAdminStats, ClientFilters, LogFilters } from '../api/super-admin';
+import { Clinic, UsageLog, SystemLog, SupportTicket, SuperAdminStats, ClientFilters, LogFilters } from '../api/super-admin';
 
 const SuperAdminService = {
   getAllClients: async (filters: ClientFilters = {}): Promise<Clinic[]> => {

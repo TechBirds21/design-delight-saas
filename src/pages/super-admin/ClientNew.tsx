@@ -5,13 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { 
+import {
   ArrowLeft, 
   Building, 
   Save,
   User,
   Mail,
-  Globe,
   Package
 } from 'lucide-react';
 import {
@@ -23,7 +22,7 @@ import {
 } from '@/components/ui/select';
 import { createClinic } from '@/api/super-admin';
 import { toast } from 'sonner';
-import type { Clinic } from '@/api/super-admin';
+// import type { Clinic } from '@/api/super-admin';
 
 const ClientNew: React.FC = () => {
   const navigate = useNavigate();
@@ -99,18 +98,16 @@ const ClientNew: React.FC = () => {
       const expiresAt = new Date();
       expiresAt.setFullYear(expiresAt.getFullYear() + 1);
 
-      const payload: Partial<Clinic> = {
+      const payload = {
         name: clientName,
         subdomain,
         plan,
-        status: 'active',
+        status: 'active' as const,
         expiresAt: expiresAt.toISOString(),
         contactName: ownerName,
         contactEmail: ownerEmail,
         contactPhone: ownerPhone,
         modules: enabledModules,
-        features: enabledFeatures,
-        dashboards: allowedDashboards,
         branches: [
           {
             id: `b${Date.now()}`,
@@ -124,7 +121,7 @@ const ClientNew: React.FC = () => {
         ]
       };
 
-      const created = await createClinic(payload);
+      const created = await createClinic(payload as any);
       toast.success(`Client ${created.name} created!`);
       navigate('/super-admin/clients');
     } catch (err) {
@@ -194,7 +191,6 @@ const ClientNew: React.FC = () => {
               <Select
                 value={plan}
                 onValueChange={v => setPlan(v as any)}
-                className="mt-1"
               >
                 <SelectTrigger id="plan">
                   <SelectValue placeholder="Select plan"/>

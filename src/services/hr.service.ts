@@ -1,5 +1,5 @@
 import api from './api';
-import { Staff, StaffDocument, AttendanceRecord, ShiftRecord, PerformanceNote, SalaryStructure, HRStats } from '../api/hr';
+import { Staff, StaffDocument, AttendanceRecord, PerformanceNote, HRStats } from '../api/hr';
 
 const HRService = {
   getAllStaff: async (filters: { branch?: string; role?: string; status?: string; search?: string } = {}): Promise<Staff[]> => {
