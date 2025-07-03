@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { TenantProvider } from './contexts/TenantContext';
 import { Toaster } from 'sonner';
-import AppLayout from '@/components/layout/AppLayout';
 import ProtectedRoute from '@/components/routes/ProtectedRoute';
 import RoleSelect from '@/pages/RoleSelect';
 
@@ -91,37 +90,19 @@ const App: React.FC = () => {
               <Route path="/signup" element={<Signup />} />
               <Route path="/select-role" element={<RoleSelect />} />
               
-              {/* Main App Layout Routes */}
-              <Route path="/app" element={<AppLayout />}>
-                {/* Default redirect to dashboard */}
-                <Route index element={<Navigate to="/app/dashboard" replace />} />
-              
-              {/* Dashboard */}
-              <Route path="dashboard" element={<Dashboard />} />
-              
-              {/* Patients */}
+              {/* Direct dashboard routes (no app layout) */}
               <Route 
-                path="patients" 
+                path="/dashboard" 
                 element={
-                  <ProtectedRoute requiredModule="patients">
-                    <Patients />
-                  </ProtectedRoute>
-                } 
-              />
-              
-              {/* Appointments */}
-              <Route 
-                path="appointments" 
-                element={
-                  <ProtectedRoute requiredModule="appointments">
-                    <Appointments />
+                  <ProtectedRoute requiredModule="dashboard">
+                    <Dashboard />
                   </ProtectedRoute>
                 } 
               />
               
               {/* Reception Module */}
               <Route 
-                path="reception" 
+                path="/reception" 
                 element={
                   <ProtectedRoute requiredModule="reception">
                     <ReceptionDashboard />
@@ -129,7 +110,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="reception/patient-register" 
+                path="/reception/patient-register" 
                 element={
                   <ProtectedRoute requiredModule="reception">
                     <PatientRegister />
@@ -137,7 +118,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="reception/appointments" 
+                path="/reception/appointments" 
                 element={
                   <ProtectedRoute requiredModule="reception">
                     <AppointmentBooking />
@@ -145,7 +126,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="reception/queue" 
+                path="/reception/queue" 
                 element={
                   <ProtectedRoute requiredModule="reception">
                     <QueueManagement />
@@ -153,7 +134,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="reception/consent-form" 
+                path="/reception/consent-form" 
                 element={
                   <ProtectedRoute requiredModule="reception">
                     <ConsentForm />
@@ -163,7 +144,7 @@ const App: React.FC = () => {
               
               {/* Doctor Module */}
               <Route 
-                path="doctor" 
+                path="/doctor" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <DoctorDashboard />
@@ -171,7 +152,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="doctor/patient/:id" 
+                path="/doctor/patient/:id" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <PatientDetails />
@@ -179,7 +160,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="doctor/soap/:id" 
+                path="/doctor/soap/:id" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <SOAPNote />
@@ -187,7 +168,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="doctor/treatment-history" 
+                path="/doctor/treatment-history" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <TreatmentHistory />
@@ -195,7 +176,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="doctor/upload-photo/:id" 
+                path="/doctor/upload-photo/:id" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <UploadPhoto />
@@ -205,7 +186,7 @@ const App: React.FC = () => {
 
               {/* Photo Manager Module */}
               <Route 
-                path="photo-manager" 
+                path="/photo-manager" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <PhotoManager />
@@ -213,7 +194,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="photo-manager/upload/:patientId" 
+                path="/photo-manager/upload/:patientId" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <PhotoUpload />
@@ -221,7 +202,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="photo-manager/patient/:patientId" 
+                path="/photo-manager/patient/:patientId" 
                 element={
                   <ProtectedRoute requiredModule="doctor">
                     <PatientGallery />
@@ -231,7 +212,7 @@ const App: React.FC = () => {
               
               {/* Technician Module */}
               <Route 
-                path="technician" 
+                path="/technician" 
                 element={
                   <ProtectedRoute requiredModule="technician">
                     <TechnicianDashboard />
@@ -239,7 +220,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="technician/procedure/:id" 
+                path="/technician/procedure/:id" 
                 element={
                   <ProtectedRoute requiredModule="technician">
                     <ProcedureDetail />
@@ -247,7 +228,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="technician/history" 
+                path="/technician/history" 
                 element={
                   <ProtectedRoute requiredModule="technician">
                     <SessionHistory />
@@ -255,9 +236,29 @@ const App: React.FC = () => {
                 } 
               />
               
-              {/* Other Modules */}
+              {/* Patients */}
               <Route 
-                path="inventory" 
+                path="/patients" 
+                element={
+                  <ProtectedRoute requiredModule="patients">
+                    <Patients />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Appointments */}
+              <Route 
+                path="/appointments" 
+                element={
+                  <ProtectedRoute requiredModule="appointments">
+                    <Appointments />
+                  </ProtectedRoute>
+                } 
+              />
+              
+              {/* Inventory & Pharmacy */}
+              <Route 
+                path="/inventory" 
                 element={
                   <ProtectedRoute requiredModule="inventory">
                     <Inventory />
@@ -265,15 +266,17 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="inventory/product/:id" 
+                path="/inventory/product/:id" 
                 element={
                   <ProtectedRoute requiredModule="inventory">
                     <ProductDetail />
                   </ProtectedRoute>
                 } 
               />
+              
+              {/* Billing */}
               <Route 
-                path="billing" 
+                path="/billing" 
                 element={
                   <ProtectedRoute requiredModule="billing">
                     <Billing />
@@ -281,15 +284,17 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="billing/invoice/:id" 
+                path="/billing/invoice/:id" 
                 element={
                   <ProtectedRoute requiredModule="billing">
                     <InvoiceDetail />
                   </ProtectedRoute>
                 } 
               />
+              
+              {/* CRM */}
               <Route 
-                path="crm" 
+                path="/crm" 
                 element={
                   <ProtectedRoute requiredModule="crm">
                     <CRMDashboard />
@@ -297,7 +302,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="crm/add-lead" 
+                path="/crm/add-lead" 
                 element={
                   <ProtectedRoute requiredModule="crm">
                     <AddLead />
@@ -305,7 +310,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="crm/lead/:id" 
+                path="/crm/lead/:id" 
                 element={
                   <ProtectedRoute requiredModule="crm">
                     <LeadDetail />
@@ -313,15 +318,17 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="crm/converted" 
+                path="/crm/converted" 
                 element={
                   <ProtectedRoute requiredModule="crm">
                     <ConvertedLeads />
                   </ProtectedRoute>
                 } 
               />
+              
+              {/* HR & Payroll */}
               <Route 
-                path="hr" 
+                path="/hr" 
                 element={
                   <ProtectedRoute requiredModule="hr">
                     <HR />
@@ -329,7 +336,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="hr/staff/:id" 
+                path="/hr/staff/:id" 
                 element={
                   <ProtectedRoute requiredModule="hr">
                     <StaffProfile />
@@ -337,7 +344,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="payroll" 
+                path="/payroll" 
                 element={
                   <ProtectedRoute requiredModule="hr">
                     <Payroll />
@@ -345,23 +352,27 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="payroll/payslip/:id" 
+                path="/payroll/payslip/:id" 
                 element={
                   <ProtectedRoute requiredModule="hr">
                     <PayslipDetail />
                   </ProtectedRoute>
                 } 
               />
+              
+              {/* Reports */}
               <Route 
-                path="reports" 
+                path="/reports" 
                 element={
                   <ProtectedRoute requiredModule="reports">
                     <Reports />
                   </ProtectedRoute>
                 } 
               />
+              
+              {/* Admin */}
               <Route 
-                path="admin" 
+                path="/admin" 
                 element={
                   <ProtectedRoute requiredModule="admin">
                     <Admin />
@@ -369,7 +380,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="admin/reports" 
+                path="/admin/reports" 
                 element={
                   <ProtectedRoute requiredModule="admin">
                     <AdminReports />
@@ -377,7 +388,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="admin/logs" 
+                path="/admin/logs" 
                 element={
                   <ProtectedRoute requiredModule="admin">
                     <AdminLogs />
@@ -387,7 +398,7 @@ const App: React.FC = () => {
               
               {/* Super Admin Module */}
               <Route 
-                path="super-admin" 
+                path="/super-admin" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <SuperAdmin />
@@ -395,7 +406,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="super-admin/clients" 
+                path="/super-admin/clients" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <ClientList />
@@ -403,7 +414,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="super-admin/clients/new" 
+                path="/super-admin/clients/new" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <ClientNew />
@@ -411,7 +422,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="super-admin/clients/:clientId" 
+                path="/super-admin/clients/:clientId" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <ClientDetail />
@@ -419,7 +430,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="super-admin/logs" 
+                path="/super-admin/logs" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <SuperAdminLogs />
@@ -427,7 +438,7 @@ const App: React.FC = () => {
                 } 
               />
               <Route 
-                path="super-admin/support" 
+                path="/super-admin/support" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <Support />
@@ -436,8 +447,7 @@ const App: React.FC = () => {
               />
               
               {/* Error Pages */}
-              <Route path="unauthorized" element={<Unauthorized />} />
-              </Route>
+              <Route path="/unauthorized" element={<Unauthorized />} />
               
               {/* 404 Page */}
               <Route path="*" element={<NotFound />} />

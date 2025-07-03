@@ -1,4 +1,4 @@
-// src/contexts/TenantContext.tsx
+// src/contexts/TenantContext.tsx - Enhanced for SaaS multi-tenant healthcare platform
 import React, {
   createContext,
   useContext,
