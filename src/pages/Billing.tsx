@@ -12,14 +12,14 @@ import {
   RefreshCw,
   Plus,
   Search,
-  Filter,
+  // Filter,
   Eye,
   Printer,
   RotateCcw,
   TrendingUp,
-  Calendar,
-  User,
-  Phone
+  // Calendar,
+  // User,
+  // Phone
 } from 'lucide-react';
 import {
   Select,
@@ -55,7 +55,7 @@ interface StatsCardProps {
   title: string;
   value: string | number;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<any>;
   color: 'blue' | 'green' | 'purple' | 'orange';
   trend?: { value: string; direction: 'up' | 'down' };
 }
