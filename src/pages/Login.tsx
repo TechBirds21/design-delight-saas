@@ -34,13 +34,11 @@ const Login: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      const user = await login(data.email, data.password);
+      await login(data.email, data.password);
       
-      // Navigate to role selection page
-      if (user) {
-        navigate('/select-role');
-        toast.success(`Logged in as ${user.name}`);
-      }
+      // Navigate to role selection page  
+      navigate('/select-role');
+      toast.success('Login successful');
     } catch (error: any) {
       toast.error(error.response?.data?.error || 'Login failed');
     } finally {
@@ -49,14 +47,14 @@ const Login: React.FC = () => {
   };
 
   // Function to determine role from email
-  const getRoleFromEmail = (email: string): string => {
-    if (email.includes('doctor')) return 'Doctor';
-    if (email.includes('reception')) return 'Receptionist';
-    if (email.includes('technician')) return 'Technician';
-    if (email.includes('admin')) return 'Admin';
-    if (email.includes('super')) return 'Super Admin';
-    return 'User';
-  };
+  // const getRoleFromEmail = (email: string): string => {
+  //   if (email.includes('doctor')) return 'Doctor';
+  //   if (email.includes('reception')) return 'Receptionist';
+  //   if (email.includes('technician')) return 'Technician';
+  //   if (email.includes('admin')) return 'Admin';
+  //   if (email.includes('super')) return 'Super Admin';
+  //   return 'User';
+  // };
 
   // Demo login credentials
   const demoCredentials = [
