@@ -197,10 +197,21 @@ export const TenantProvider: React.FC<TenantProviderProps> = ({ children }) => {
     (mod: string) => {
       if (loading || authLoading) return false;
       if (data.currentRole === 'super_admin') return true;
-      return (
-        Boolean(data.enabledModules[mod]) &&
-        data.rolePermissions[data.currentRole]?.includes(mod)
-      );
+      
+      // Map modules to role permissions for dashboard access
+      const moduleMap: Record<string, string[]> = {
+        reception: ['receptionist'],
+        billing: ['admin', 'receptionist'],
+        doctor: ['doctor'],
+        hr: ['admin'],
+        admin: ['admin'],
+        inventory: ['pharmacist', 'admin'],
+        technician: ['technician'],
+        procedures: ['admin', 'doctor']
+      };
+      
+      const allowedRoles = moduleMap[mod] || ['admin'];
+      return allowedRoles.includes(data.currentRole) || Boolean(data.enabledModules[mod]);
     },
     [loading, authLoading, data]
   );

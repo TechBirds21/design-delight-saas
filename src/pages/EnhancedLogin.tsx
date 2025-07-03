@@ -24,7 +24,7 @@ import {
   Shield,
   Activity
 } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+
 import { toast } from 'sonner';
 
 const loginSchema = z.object({
@@ -37,7 +37,6 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 const EnhancedLogin: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -118,7 +117,32 @@ const EnhancedLogin: React.FC = () => {
       
       // Simple validation for demo - any role works with abc/123
       if (data.email === 'abc' && data.password === '123') {
-        await login(data.email, data.password);
+        // Create a mock user with the selected role
+        const mockUser = {
+          id: `user-${Date.now()}`,
+          auth_user_id: `auth-${Date.now()}`,
+          name: getRoleDisplayName(data.role),
+          email: data.email,
+          role: mapToAuthRole(data.role),
+          client_id: 'client-123',
+          client: {
+            name: 'SkinClinic Pro',
+            subdomain: 'skinova',
+            logo: 'https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop',
+            plan: 'professional',
+            status: 'active',
+            modules_enabled: [
+              "dashboard", "patients", "appointments", "inventory", "billing", 
+              "crm", "hr", "reports", "admin", "reception", "doctor", 
+              "photo-manager", "technician", "procedures"
+            ],
+            role_permissions: {}
+          }
+        };
+
+        // Store tokens and user
+        localStorage.setItem('token', 'demo_token');
+        localStorage.setItem('currentUser', JSON.stringify(mockUser));
         
         // Navigate to role-specific dashboard
         const roleRoutes: Record<string, string> = {
@@ -140,6 +164,35 @@ const EnhancedLogin: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Helper functions
+  const mapToAuthRole = (role: string) => {
+    const roleMap: Record<string, string> = {
+      reception: 'receptionist',
+      billing: 'admin',
+      doctor: 'doctor',
+      hr: 'admin',
+      admin: 'admin',
+      pharmacy: 'pharmacist',
+      technician: 'technician',
+      procedures: 'admin'
+    };
+    return roleMap[role] || 'admin';
+  };
+
+  const getRoleDisplayName = (role: string) => {
+    const nameMap: Record<string, string> = {
+      reception: 'Reception Staff',
+      billing: 'Billing Manager',
+      doctor: 'Dr. Demo User',
+      hr: 'HR Manager',
+      admin: 'Admin User',
+      pharmacy: 'Pharmacist',
+      technician: 'Technician',
+      procedures: 'Procedures Manager'
+    };
+    return nameMap[role] || 'Demo User';
   };
 
   // Get tenant info from subdomain
