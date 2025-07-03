@@ -118,10 +118,8 @@ const RoleSelect: React.FC = () => {
     }
   ];
   
-  // For demo purposes, show all roles to admin users
-  const availableRoles = user?.role === 'admin' ? roleOptions : roleOptions.filter(role => 
-    role.id === user?.role || role.id === 'admin'
-  );
+  // Show all roles for demo purposes
+  const availableRoles = roleOptions;
 
   const handleRoleSelect = async (role: RoleOption) => {
     setSelectedRole(role.id);
