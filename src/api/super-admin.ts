@@ -300,7 +300,7 @@ const initializeMockData = (): void => {
         name: 'LaserTech Clinic',
         subdomain: 'lasertech',
         logo: 'https://images.pexels.com/photos/3846005/pexels-photo-3846005.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop',
-        plan: 'trial',
+        plan: 'basic',
         status: 'trial',
         createdAt: '2024-05-01T14:30:00Z',
         expiresAt: '2024-06-01T14:30:00Z',

@@ -135,7 +135,7 @@ const Navbar: React.FC = () => {
                 className="flex items-center space-x-2 sm:space-x-3 hover:bg-gray-50 px-2 sm:px-3 py-2 rounded-lg transition-colors"
               >
                 <Avatar className="w-8 h-8 sm:w-9 sm:h-9 border-2 border-gray-200">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={user.avatar || '/default-avatar.png'} alt={user.name} />
                   <AvatarFallback className="bg-blue-500 text-white text-sm font-medium">
                     {getInitials(user.name)}
                   </AvatarFallback>

@@ -20,7 +20,7 @@ import InvoiceDetail from '@/pages/billing/InvoiceDetail';
 // Inventory pages
 import ProductDetail from '@/pages/inventory/ProductDetail';
 
-import CRM from '@/pages/CRM';
+// import CRM from '@/pages/CRM';
 import HR from '@/pages/HR';
 import Payroll from '@/pages/Payroll';
 import Reports from '@/pages/Reports';
@@ -74,6 +74,8 @@ import TechnicianDashboard from '@/pages/technician/TechnicianDashboard';
 import ProcedureDetail from '@/pages/technician/ProcedureDetail';
 import SessionHistory from '@/pages/technician/SessionHistory';
 
+import Index from '@/pages/Index';
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -81,15 +83,18 @@ const App: React.FC = () => {
         <TenantProvider>
           <div className="min-h-screen bg-gray-50">
             <Routes>
+              {/* Landing Page - Public Route */}
+              <Route path="/" element={<Index />} />
+              
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/select-role" element={<RoleSelect />} />
               
-              {/* Main Layout Routes */}
-              <Route path="/" element={<AppLayout />}>
+              {/* Main App Layout Routes */}
+              <Route path="/app" element={<AppLayout />}>
                 {/* Default redirect to dashboard */}
-                <Route index element={<Navigate to="/select-role" replace />} />
+                <Route index element={<Navigate to="/app/dashboard" replace />} />
               
               {/* Dashboard */}
               <Route path="dashboard" element={<Dashboard />} />

@@ -37,10 +37,10 @@ export function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" asChild>
-              <a href="/login">Sign In</a>
+              <a href="/app/login">Sign In</a>
             </Button>
-            <Button variant="premium" asChild>
-              <a href="/signup">Get Started</a>
+            <Button variant="default" asChild>
+              <a href="/app/signup">Get Started</a>
             </Button>
           </div>
 
@@ -90,10 +90,10 @@ export function Navigation() {
               </a>
               <div className="border-t border-border pt-3 mt-3 space-y-2">
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                  <a href="/login">Sign In</a>
+                  <a href="/app/login">Sign In</a>
                 </Button>
-                <Button variant="premium" className="w-full" asChild>
-                  <a href="/signup">Get Started</a>
+                <Button variant="default" className="w-full" asChild>
+                  <a href="/app/signup">Get Started</a>
                 </Button>
               </div>
             </div>

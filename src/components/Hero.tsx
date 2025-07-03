@@ -58,7 +58,7 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" variant="premium" className="shadow-lg hover:shadow-xl transition-all">
+              <Button size="lg" variant="default" className="shadow-lg hover:shadow-xl transition-all">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

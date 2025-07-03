@@ -183,8 +183,8 @@ initializeMockData();
 // ——————————————
 // Mock generators (30 days)
 // ——————————————
-function generateMockAttendance(): AttendanceRecord[] { /* … */ }
-function generateMockShifts(): ShiftRecord[] { /* … */ }
+function generateMockAttendance(): AttendanceRecord[] { return []; }
+function generateMockShifts(): ShiftRecord[] { return []; }
 
 // ——————————————
 // API functions
