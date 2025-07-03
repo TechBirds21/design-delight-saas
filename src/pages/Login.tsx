@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -8,19 +8,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Stethoscope } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'sonner';
 
 const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  email: z.string().min(1, 'Please enter username'),
+  password: z.string().min(1, 'Please enter password'),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
@@ -34,39 +32,38 @@ const Login: React.FC = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      await login(data.email, data.password);
       
-      // Navigate to role selection page  
-      navigate('/select-role');
-      toast.success('Login successful');
+      // Simple demo authentication - use abc/123 for any role
+      if (data.email === 'abc' && data.password === '123') {
+        // Create a mock user
+        const mockUser = {
+          id: `user-${Date.now()}`,
+          name: 'Demo User',
+          email: data.email,
+          role: 'admin',
+          client_id: 'client-123'
+        };
+
+        // Store tokens and user
+        localStorage.setItem('token', 'demo_token');
+        localStorage.setItem('currentUser', JSON.stringify(mockUser));
+        
+        // Navigate to role selection page  
+        navigate('/select-role');
+        toast.success('Login successful');
+      } else {
+        throw new Error('Invalid credentials. Use abc/123 for demo.');
+      }
     } catch (error: any) {
-      toast.error(error.response?.data?.error || 'Login failed');
+      toast.error(error.message || 'Login failed');
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Function to determine role from email
-  // const getRoleFromEmail = (email: string): string => {
-  //   if (email.includes('doctor')) return 'Doctor';
-  //   if (email.includes('reception')) return 'Receptionist';
-  //   if (email.includes('technician')) return 'Technician';
-  //   if (email.includes('admin')) return 'Admin';
-  //   if (email.includes('super')) return 'Super Admin';
-  //   return 'User';
-  // };
 
-  // Demo login credentials
-  const demoCredentials = [
-    { role: 'Doctor', email: 'doctor@skinova.com', password: '123' },
-    { role: 'Receptionist', email: 'reception@skinova.com', password: '123' },
-    { role: 'Technician', email: 'technician@skinova.com', password: '123' },
-    { role: 'Admin', email: 'admin@skinova.com', password: '123' },
-    { role: 'Super Admin', email: 'super@hospverse.com', password: '123' }
-  ];
-
-  const handleDemoLogin = (email: string, password: string) => {
-    const formData = { email, password };
+  const handleDemoLogin = () => {
+    const formData = { email: 'abc', password: '123' };
     onSubmit(formData);
   };
 
@@ -93,11 +90,11 @@ const Login: React.FC = () => {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">Username</Label>
               <Input
                 id="email"
-                type="email"
-                placeholder="name@example.com"
+                type="text"
+                placeholder="abc"
                 {...register('email')}
               />
               {errors.email && (
@@ -105,16 +102,11 @@ const Login: React.FC = () => {
               )}
             </div>
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link to="/forgot-password" className="text-sm text-blue-500 hover:text-blue-600">
-                  Forgot password?
-                </Link>
-              </div>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder="123"
                 {...register('password')}
               />
               {errors.password && (
@@ -128,31 +120,25 @@ const Login: React.FC = () => {
 
           {/* Demo Login Section */}
           <div className="mt-6 pt-6 border-t border-gray-200">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Demo Accounts (Click to login):</h3>
-            <div className="space-y-2">
-              {demoCredentials.map((cred, index) => (
-                <Button 
-                  key={index} 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full justify-between"
-                  onClick={() => handleDemoLogin(cred.email, cred.password)}
-                >
-                  <span>{cred.role}</span>
-                  <span className="text-xs text-gray-500">{cred.email}</span>
-                </Button>
-              ))}
+            <div className="text-center space-y-3">
+              <p className="text-sm text-gray-600">Demo Credentials:</p>
+              <div className="bg-gray-50 p-3 rounded-lg text-sm">
+                <p><strong>Username:</strong> abc</p>
+                <p><strong>Password:</strong> 123</p>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full"
+                onClick={handleDemoLogin}
+              >
+                Try Demo Login
+              </Button>
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
-          <div className="text-sm text-center text-gray-500">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-blue-500 hover:text-blue-600">
-              Sign up
-            </Link>
-          </div>
-          <div className="text-xs text-center text-gray-400">
+        <CardFooter className="text-center">
+          <div className="text-xs text-gray-400">
             By signing in, you agree to our Terms of Service and Privacy Policy.
           </div>
         </CardFooter>

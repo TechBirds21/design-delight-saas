@@ -7,7 +7,6 @@ import ProtectedRoute from '@/components/routes/ProtectedRoute';
 import EmployeeDirectory from '@/pages/hr/EmployeeDirectory';
 
 // Doctor Pages
-import DoctorLogin from '@/pages/doctor/DoctorLogin';
 import DoctorAppointments from '@/pages/doctor/DoctorAppointments';
 import DoctorPatients from '@/pages/doctor/DoctorPatients';
 import DoctorEMR from '@/pages/doctor/DoctorEMR';
@@ -18,7 +17,8 @@ import DoctorAnalytics from '@/pages/doctor/DoctorAnalytics';
 import DoctorProfile from '@/pages/doctor/DoctorProfile';
 
 // Auth & Landing Pages
-import EnhancedLogin from '@/pages/EnhancedLogin';
+import Login from '@/pages/Login';
+import RoleSelect from '@/pages/RoleSelect';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
 import Index from '@/pages/Index';
@@ -47,7 +47,8 @@ const App: React.FC = () => {
               <Route path="/" element={<Index />} />
               
               {/* Auth Routes */}
-              <Route path="/login" element={<EnhancedLogin />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/select-role" element={<RoleSelect />} />
               
               {/* Role-Based Dashboards */}
               <Route 
@@ -77,10 +78,6 @@ const App: React.FC = () => {
                 } 
               />
               
-              <Route 
-                path="/doctor/login" 
-                element={<DoctorLogin />} 
-              />
               
               <Route 
                 path="/doctor/appointments" 
@@ -217,9 +214,19 @@ const App: React.FC = () => {
                 } 
               />
               
+              {/* CRM Routes */}
+              <Route 
+                path="/crm" 
+                element={
+                  <ProtectedRoute requiredModule="crm">
+                    <div className="p-6"><h1>CRM Dashboard - Coming Soon</h1></div>
+                  </ProtectedRoute>
+                } 
+              />
+              
               {/* Super Admin Console */}
               <Route 
-                path="/superadmin" 
+                path="/super-admin" 
                 element={
                   <ProtectedRoute requiredModule="super_admin">
                     <SuperAdminDashboard />

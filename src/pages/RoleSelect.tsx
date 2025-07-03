@@ -29,8 +29,8 @@ interface RoleOption {
 }
 
 const RoleSelect: React.FC = () => {
-  const { tenantName, enabledModules } = useTenant();
-  const { user, logout } = useAuth();
+  const { tenantName } = useTenant();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
@@ -118,24 +118,9 @@ const RoleSelect: React.FC = () => {
     }
   ];
   
-  // Define which roles can access which modules
-  const roleAccessMap: Record<string, string[]> = {
-    super_admin: roleOptions.map(r => r.id), // Super admin can access everything
-    admin: ['admin', 'hr', 'crm', 'billing', 'inventory', 'reports'],
-    doctor: ['doctor', 'photo-manager'],
-    receptionist: ['reception'],
-    technician: ['technician'],
-    nurse: ['doctor'],
-    pharmacist: ['inventory']
-  };
-  
-  // Get the allowed modules for the current user
-  const allowedModules = roleAccessMap[user?.role || ''] || [];
-  
-  // Filter roles based on user's role and enabled modules
-  const availableRoles = roleOptions.filter(role => 
-    allowedModules.includes(role.id) && 
-    (enabledModules[role.id] || role.id === 'admin' || role.id === 'super-admin')
+  // For demo purposes, show all roles to admin users
+  const availableRoles = user?.role === 'admin' ? roleOptions : roleOptions.filter(role => 
+    role.id === user?.role || role.id === 'admin'
   );
 
   const handleRoleSelect = async (role: RoleOption) => {
@@ -147,7 +132,10 @@ const RoleSelect: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await logout();
+      // Clear local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUser');
+      
       navigate('/login');
       toast.success('Logged out successfully');
     } catch (error) {
