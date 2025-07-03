@@ -10,8 +10,7 @@ import {
   CalendarDays, 
   UserPlus, 
   Building,
-  Search, 
-  Filter,
+  Search,
   Eye,
   Edit,
   UserCog,
@@ -34,7 +33,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from '@/components/ui/dialog';
 import {
@@ -47,19 +45,40 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
-  Legend
+  Tooltip
 } from 'recharts';
-import { getAllStaff, getHRStats } from '@/api/hr';
-import type { Staff, HRStats } from '@/api/hr';
+// import { getAllStaff, getHRStats } from '@/api/hr';
+// import type { Staff, HRStats } from '@/api/hr';
 import { toast } from 'sonner';
 import HRService from '@/services/hr.service';
+
+// Temporary types until API is properly defined
+interface Staff {
+  id: string;
+  name: string;
+  role: string;
+  branch: string;
+  phone: string;
+  email: string;
+  joinDate: string;
+  status: string;
+  avatar?: string;
+}
+
+interface HRStats {
+  totalStaff: number;
+  onLeaveToday: number;
+  newJoinsThisMonth: number;
+  upcomingReviews: number;
+  departmentCounts: Record<string, number>;
+  branchCounts: Record<string, number>;
+}
 
 interface StatsCardProps {
   title: string;
   value: number | string;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<any>;
   color: 'blue' | 'green' | 'purple' | 'orange';
   href?: string;
 }
@@ -77,7 +96,7 @@ const HR: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [branchFilter, setBranchFilter] = useState('all');
   const [roleFilter, setRoleFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const [showAddStaffDialog, setShowAddStaffDialog] = useState(false);
 
@@ -287,9 +306,9 @@ const HR: React.FC = () => {
                     dataKey="value"
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                   >
-                    {departmentData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
+                     {departmentData.map((_, index) => (
+                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                     ))}
                   </Pie>
                   <Tooltip />
                 </PieChart>
@@ -419,7 +438,7 @@ const HR: React.FC = () => {
                               />
                             ) : (
                               <div className="w-full h-full bg-blue-500 flex items-center justify-center text-white text-sm font-semibold">
-                                {member.name.split(' ').map(n => n[0]).join('')}
+                                {member.name.split(' ').map((n: string) => n[0]).join('')}
                               </div>
                             )}
                           </div>

@@ -38,54 +38,62 @@ import {
   Plus,
   Eye,
   CheckCircle,
-  XCircle
+  XCircle,
+  RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip
-} from 'recharts';
+// import {
+//   ResponsiveContainer,
+//   BarChart,
+//   Bar,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip
+// } from 'recharts';
 import CrmService from '@/services/crm.service';
-import type { Lead, CrmStats } from '@/api/crm';
+import type { Lead, CRMStats } from '@/api/crm';
 
 const CRM: React.FC = () => {
   // State
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [stats, setStats] = useState<CrmStats>({
-    total: 0,
-    open: 0,
+  const [stats, setStats] = useState<CRMStats>({
+    totalLeads: 0,
     converted: 0,
-    lost: 0,
-    monthly: []
+    followUpsDue: 0,
+    whatsappLeads: 0,
+    conversionRate: 0,
+    newLeads: 0,
+    contactedLeads: 0,
+    consultedLeads: 0,
+    droppedLeads: 0
   });
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all'|'open'|'converted'|'lost'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all'|'new'|'contacted'|'consulted'|'converted'|'dropped'>('all');
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showViewDialog, setShowViewDialog] = useState(false);
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   
   // Form for new lead
   const [newLead, setNewLead] = useState<Partial<Lead>>({
-    name: '',
+    fullName: '',
     email: '',
-    phone: '',
-    status: 'open',
-    source: ''
+    mobile: '',
+    status: 'new',
+    source: 'form',
+    assignedTo: '',
+    assignedToId: 1,
+    notes: ''
   });
   
   // Load stats & leads
   useEffect(() => {
     const load = async () => {
-      setLoading(true);
+      // setLoading(true);
       try {
         const [s, ls] = await Promise.all([
-          CrmService.getCrmStats(),
+          CrmService.getCRMStats(),
           CrmService.getLeads({ status: statusFilter !== 'all' ? statusFilter : undefined, search: searchTerm || undefined })
         ]);
         setStats(s);
@@ -94,7 +102,7 @@ const CRM: React.FC = () => {
         console.error(err);
         toast.error('Failed to load CRM data');
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
     load();
@@ -102,15 +110,15 @@ const CRM: React.FC = () => {
   
   // Handlers
   const handleAddLead = async () => {
-    if (!newLead.name || !newLead.email) {
-      toast.error('Name & email are required');
+    if (!newLead.fullName || !newLead.mobile) {
+      toast.error('Name & mobile are required');
       return;
     }
     try {
-      await CrmService.createLead(newLead as Lead);
+      await CrmService.addLead(newLead as Omit<Lead, 'id' | 'createdAt' | 'updatedAt' | 'statusHistory' | 'notesHistory'>);
       toast.success('Lead created');
       setShowAddDialog(false);
-      setNewLead({ name:'', email:'', phone:'', status:'open', source:'' });
+      setNewLead({ fullName:'', email:'', mobile:'', status:'new', source:'form', assignedTo:'', assignedToId:1, notes:'' });
       // reload
       const ls = await CrmService.getLeads({ status: statusFilter!=='all'?statusFilter:undefined, search: searchTerm||undefined });
       setLeads(ls);
@@ -134,10 +142,10 @@ const CRM: React.FC = () => {
           <h1 className="text-3xl font-bold">CRM</h1>
           <p className="text-gray-600 mt-1">Manage your leads and pipeline</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm" onClick={() => setLoading(true)}>
-            <RefreshCw className="mr-1" /> Refresh
-          </Button>
+      <div className="flex items-center space-x-2">
+        <Button variant="outline" size="sm" onClick={() => window.location.reload()}>
+          <RefreshCw className="mr-1" /> Refresh
+        </Button>
           <Button size="sm" onClick={() => setShowAddDialog(true)}>
             <Plus className="mr-1" /> New Lead
           </Button>
@@ -148,14 +156,14 @@ const CRM: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold">{stats.total}</p>
+            <p className="text-2xl font-bold">{stats.totalLeads}</p>
             <p className="text-sm text-gray-500">Total Leads</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-blue-600">{stats.open}</p>
-            <p className="text-sm text-gray-500">Open</p>
+            <p className="text-2xl font-bold text-blue-600">{stats.newLeads}</p>
+            <p className="text-sm text-gray-500">New</p>
           </CardContent>
         </Card>
         <Card>
@@ -166,8 +174,8 @@ const CRM: React.FC = () => {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-red-600">{stats.lost}</p>
-            <p className="text-sm text-gray-500">Lost</p>
+            <p className="text-2xl font-bold text-red-600">{stats.droppedLeads}</p>
+            <p className="text-sm text-gray-500">Dropped</p>
           </CardContent>
         </Card>
       </div>
@@ -202,12 +210,14 @@ const CRM: React.FC = () => {
                     <SelectTrigger className="w-32">
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="open">Open</SelectItem>
-                      <SelectItem value="converted">Converted</SelectItem>
-                      <SelectItem value="lost">Lost</SelectItem>
-                    </SelectContent>
+                        <SelectContent>
+                          <SelectItem value="all">All</SelectItem>
+                          <SelectItem value="new">New</SelectItem>
+                          <SelectItem value="contacted">Contacted</SelectItem>
+                          <SelectItem value="consulted">Consulted</SelectItem>
+                          <SelectItem value="converted">Converted</SelectItem>
+                          <SelectItem value="dropped">Dropped</SelectItem>
+                        </SelectContent>
                   </Select>
                 </div>
               </div>
@@ -228,13 +238,13 @@ const CRM: React.FC = () => {
                   <TableBody>
                     {leads.map(lead => (
                       <TableRow key={lead.id} className="hover:bg-gray-50">
-                        <TableCell>{lead.name}</TableCell>
+                        <TableCell>{lead.fullName}</TableCell>
                         <TableCell>{lead.email}</TableCell>
-                        <TableCell>{lead.phone}</TableCell>
+                        <TableCell>{lead.mobile}</TableCell>
                         <TableCell>
                           <Badge
                             className={`capitalize ${
-                              lead.status === 'open' ? 'bg-blue-100 text-blue-800' :
+                              lead.status === 'new' ? 'bg-blue-100 text-blue-800' :
                               lead.status === 'converted' ? 'bg-green-100 text-green-800' :
                               'bg-red-100 text-red-800'
                             }`}
@@ -261,19 +271,18 @@ const CRM: React.FC = () => {
         <TabsContent value="analytics">
           <Card>
             <CardHeader>
-              <CardTitle>Monthly Leads</CardTitle>
+              <CardTitle>CRM Analytics</CardTitle>
             </CardHeader>
             <CardContent>
-              <div style={{ height: 300 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={stats.monthly}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-                    <XAxis dataKey="month" stroke="#666" />
-                    <YAxis stroke="#666" />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#3B82F6" />
-                  </BarChart>
-                </ResponsiveContainer>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center">
+                  <p className="text-2xl font-bold">{stats.conversionRate}%</p>
+                  <p className="text-sm text-gray-500">Conversion Rate</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl font-bold">{stats.followUpsDue}</p>
+                  <p className="text-sm text-gray-500">Follow-ups Due</p>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -290,8 +299,8 @@ const CRM: React.FC = () => {
           <div className="space-y-4">
             <Input
               placeholder="Name"
-              value={newLead.name}
-              onChange={e => setNewLead(prev => ({ ...prev, name: e.target.value }))}
+              value={newLead.fullName}
+              onChange={e => setNewLead(prev => ({ ...prev, fullName: e.target.value }))}
             />
             <Input
               placeholder="Email"
@@ -299,9 +308,9 @@ const CRM: React.FC = () => {
               onChange={e => setNewLead(prev => ({ ...prev, email: e.target.value }))}
             />
             <Input
-              placeholder="Phone"
-              value={newLead.phone}
-              onChange={e => setNewLead(prev => ({ ...prev, phone: e.target.value }))}
+              placeholder="Mobile"
+              value={newLead.mobile}
+              onChange={e => setNewLead(prev => ({ ...prev, mobile: e.target.value }))}
             />
             <Select
               value={newLead.status!}
@@ -311,16 +320,30 @@ const CRM: React.FC = () => {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="open">Open</SelectItem>
+                <SelectItem value="new">New</SelectItem>
+                <SelectItem value="contacted">Contacted</SelectItem>
+                <SelectItem value="consulted">Consulted</SelectItem>
                 <SelectItem value="converted">Converted</SelectItem>
-                <SelectItem value="lost">Lost</SelectItem>
+                <SelectItem value="dropped">Dropped</SelectItem>
               </SelectContent>
             </Select>
-            <Input
-              placeholder="Source (e.g. Website, Referral)"
+            <Select
               value={newLead.source}
-              onChange={e => setNewLead(prev => ({ ...prev, source: e.target.value }))}
-            />
+              onValueChange={v => setNewLead(prev => ({ ...prev, source: v as Lead['source'] }))}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Source" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                <SelectItem value="form">Website Form</SelectItem>
+                <SelectItem value="referral">Referral</SelectItem>
+                <SelectItem value="instagram">Instagram</SelectItem>
+                <SelectItem value="walk-in">Walk-in</SelectItem>
+                <SelectItem value="facebook">Facebook</SelectItem>
+                <SelectItem value="google">Google</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <DialogFooter className="mt-4 flex justify-end space-x-2">
             <Button variant="outline" onClick={() => setShowAddDialog(false)}>
@@ -341,9 +364,9 @@ const CRM: React.FC = () => {
           </DialogHeader>
           {selectedLead && (
             <div className="space-y-4">
-              <p><strong>Name:</strong> {selectedLead.name}</p>
+              <p><strong>Name:</strong> {selectedLead.fullName}</p>
               <p><strong>Email:</strong> {selectedLead.email}</p>
-              <p><strong>Phone:</strong> {selectedLead.phone}</p>
+              <p><strong>Mobile:</strong> {selectedLead.mobile}</p>
               <p><strong>Status:</strong> {selectedLead.status}</p>
               <p><strong>Source:</strong> {selectedLead.source}</p>
               <div className="flex space-x-2">
@@ -351,7 +374,7 @@ const CRM: React.FC = () => {
                   variant="outline"
                   size="sm"
                   onClick={async () => {
-                    await CrmService.updateLead(selectedLead.id, { status: 'converted' });
+                    await CrmService.updateLeadStatus(selectedLead.id, 'converted');
                     toast.success('Marked as converted');
                     setShowViewDialog(false);
                     // Refresh
@@ -366,15 +389,15 @@ const CRM: React.FC = () => {
                   variant="outline"
                   size="sm"
                   onClick={async () => {
-                    await CrmService.updateLead(selectedLead.id, { status: 'lost' });
-                    toast.success('Marked as lost');
+                    await CrmService.updateLeadStatus(selectedLead.id, 'dropped');
+                    toast.success('Marked as dropped');
                     setShowViewDialog(false);
                     const ls = await CrmService.getLeads({ status: statusFilter!=='all'?statusFilter:undefined, search: searchTerm||undefined });
                     setLeads(ls);
                   }}
-                  disabled={selectedLead.status === 'lost'}
+                  disabled={selectedLead.status === 'dropped'}
                 >
-                  <XCircle className="mr-1" /> Lose
+                  <XCircle className="mr-1" /> Drop
                 </Button>
               </div>
             </div>
