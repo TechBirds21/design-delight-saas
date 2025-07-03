@@ -1,6 +1,6 @@
 // src/pages/crm/LeadDetail.tsx
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -39,7 +39,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import CRMService from '@/services/crm.service';
-import type { Lead } from '@/services/crm.service';
+import type { Lead } from '@/api/crm';
 import { toast } from 'sonner';
 
 const LeadDetail: React.FC = () => {
@@ -129,7 +129,7 @@ const LeadDetail: React.FC = () => {
     }
   }
 
-  const getStatusColor = (s: Lead['status']) =>
+  const getStatusColor = (s: string) =>
     ({
       new: 'bg-gray-100 text-gray-800',
       contacted: 'bg-blue-100 text-blue-800',
@@ -138,7 +138,7 @@ const LeadDetail: React.FC = () => {
       dropped: 'bg-red-100 text-red-800',
     }[s] ?? 'bg-gray-100 text-gray-800');
 
-  const getSourceColor = (src: Lead['source']) =>
+  const getSourceColor = (src: string) =>
     ({
       whatsapp: 'bg-green-50 text-green-700',
       form: 'bg-blue-50 text-blue-700',
@@ -214,7 +214,7 @@ const LeadDetail: React.FC = () => {
                 >
                   {lead.fullName
                     .split(' ')
-                    .map((t) => t[0])
+                    .map((t: string) => t[0])
                     .join('')}
                 </div>
                 <h2 className="mt-2 font-semibold">{lead.fullName}</h2>
@@ -414,7 +414,7 @@ const LeadDetail: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {lead.statusHistory.map((h) => (
+              {lead.statusHistory.map((h: any) => (
                 <div
                   key={h.id}
                   className="flex items-start space-x-4 border-b pb-4 last:border-b-0"
@@ -472,7 +472,7 @@ const LeadDetail: React.FC = () => {
                   No notes yet
                 </p>
               ) : (
-                lead.notesHistory.map((n) => (
+                lead.notesHistory.map((n: any) => (
                   <div
                     key={n.id}
                     className="bg-white p-4 rounded-lg border"

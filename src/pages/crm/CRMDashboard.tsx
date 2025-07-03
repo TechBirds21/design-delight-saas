@@ -19,9 +19,6 @@ import {
   Search,
   Eye,
   UserCheck,
-  Phone,
-  Mail,
-  Calendar,
   BarChart3,
 } from 'lucide-react';
 import {
@@ -45,7 +42,7 @@ import {
   Legend,
 } from 'recharts';
 import CRMService from '@/services/crm.service';
-import type { Lead, CRMStats } from '@/services/crm.service';
+import type { Lead, CRMStats } from '@/api/crm';
 import { toast } from 'sonner';
 
 // StatsCard component
@@ -53,7 +50,7 @@ interface StatsCardProps {
   title: string;
   value: string | number;
   subtitle?: string;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
+  icon: React.ComponentType<any>;
   color: 'blue' | 'green' | 'orange' | 'purple';
   href?: string;
 }
@@ -165,7 +162,7 @@ const CRMDashboard: React.FC = () => {
     }
   }
 
-  const getStatusColor = (s: Lead['status']) =>
+  const getStatusColor = (s: string) =>
     ({
       new: 'bg-gray-100 text-gray-800',
       contacted: 'bg-blue-100 text-blue-800',
@@ -174,7 +171,7 @@ const CRMDashboard: React.FC = () => {
       dropped: 'bg-red-100 text-red-800',
     }[s] ?? 'bg-gray-100 text-gray-800');
 
-  const getSourceColor = (src: Lead['source']) =>
+  const getSourceColor = (src: string) =>
     ({
       whatsapp: 'bg-green-50 text-green-700',
       form: 'bg-blue-50 text-blue-700',
@@ -192,8 +189,8 @@ const CRMDashboard: React.FC = () => {
     { name: 'Consulted', value: stats.consultedLeads },
     { name: 'Converted', value: stats.converted },
   ];
-  const sourceData = leads.reduce((acc, l) => {
-    const idx = acc.findIndex(x => x.source === l.source);
+  const sourceData = leads.reduce((acc: { source: string; count: number }[], l) => {
+    const idx = acc.findIndex((x: { source: string; count: number }) => x.source === l.source);
     if (idx >= 0) acc[idx].count++;
     else acc.push({ source: l.source, count: 1 });
     return acc;
@@ -301,7 +298,7 @@ const CRMDashboard: React.FC = () => {
                   outerRadius={80}
                   label
                 >
-                  {sourceData.map((entry, i) => (
+                  {sourceData.map((_entry: any, i: number) => (
                     <Cell key={i} fill={`hsl(${i * 60},70%,60%)`} />
                   ))}
                 </Pie>

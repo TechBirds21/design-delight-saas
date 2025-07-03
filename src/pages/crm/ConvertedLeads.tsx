@@ -18,7 +18,7 @@ import {
   Stethoscope
 } from 'lucide-react';
 import CRMService from '@/services/crm.service';
-import type { ConvertedLead } from '@/services/crm.service';
+import type { ConvertedLead } from '@/api/crm';
 import { toast } from 'sonner';
 
 const ConvertedLeads: React.FC = () => {
