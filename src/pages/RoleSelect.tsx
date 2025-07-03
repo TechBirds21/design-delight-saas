@@ -156,10 +156,12 @@ const RoleSelect: React.FC = () => {
           </div>
         </div>
         
-        <Button variant="outline" className="glass" onClick={handleLogout}>
-          <LogOut size={16} className="mr-2" />
-          Logout
-        </Button>
+        {user && (
+          <Button variant="outline" className="glass" onClick={handleLogout}>
+            <LogOut size={16} className="mr-2" />
+            Logout
+          </Button>
+        )}
       </div>
       
       {/* Main Content */}
@@ -169,7 +171,7 @@ const RoleSelect: React.FC = () => {
             <CardHeader className="text-center space-y-4 pb-8">
               <div className="space-y-2">
                 <CardTitle className="text-3xl font-heading font-bold text-gradient-primary">
-                  Welcome back, {user?.name}
+                  {user ? `Welcome back, ${user.name}` : 'Welcome to HospVerse'}
                 </CardTitle>
                 <CardDescription className="text-lg text-muted-foreground">
                   Select your role to access the healthcare management platform
@@ -180,10 +182,12 @@ const RoleSelect: React.FC = () => {
                   <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
                   <span>System Online</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
-                  <span>Role: {user?.role.replace('_', ' ')}</span>
-                </div>
+                {user && (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-primary rounded-full"></div>
+                    <span>Role: {user.role.replace('_', ' ')}</span>
+                  </div>
+                )}
               </div>
             </CardHeader>
             
@@ -250,9 +254,11 @@ const RoleSelect: React.FC = () => {
             </CardContent>
             
             <CardFooter className="text-center space-y-4 pt-8">
-              <div className="text-sm text-muted-foreground">
-                Logged in as <span className="font-medium text-foreground">{user?.email}</span>
-              </div>
+              {user && (
+                <div className="text-sm text-muted-foreground">
+                  Logged in as <span className="font-medium text-foreground">{user.email}</span>
+                </div>
+              )}
               <div className="text-xs text-muted-foreground">
                 Secure access powered by advanced AI and machine learning algorithms
               </div>

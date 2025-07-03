@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { TenantProvider } from './contexts/TenantContext';
 import { Toaster } from 'sonner';
@@ -52,7 +52,6 @@ import RoleLogin from '@/pages/RoleLogin';
 import RoleSelect from '@/pages/RoleSelect';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
-import Index from '@/pages/Index';
 
 // Role-Based Dashboards
 import ReceptionDashboard from '@/pages/dashboards/ReceptionDashboard';
@@ -74,8 +73,8 @@ const App: React.FC = () => {
         <TenantProvider>
           <div className="min-h-screen bg-gray-50">
             <Routes>
-              {/* Landing Page - Public Route */}
-              <Route path="/" element={<Index />} />
+              {/* Landing Page - Public Route (redirect to select-role) */}
+              <Route path="/" element={<Navigate to="/select-role" replace />} />
               
               {/* Auth Routes */}
               <Route path="/select-role" element={<RoleSelect />} />

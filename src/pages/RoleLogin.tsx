@@ -122,7 +122,7 @@ const RoleLogin: React.FC = () => {
           email: data.email,
           role: role === 'inventory' ? 'pharmacist' : role === 'reception' ? 'receptionist' : role,
           client_id: 'client-123'
-        };
+        } as any;
 
         // Store tokens and user
         localStorage.setItem('token', 'demo_token');
