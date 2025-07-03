@@ -126,8 +126,9 @@ const RoleSelect: React.FC = () => {
   const handleRoleSelect = async (role: RoleOption) => {
     setSelectedRole(role.id);
     await new Promise((r) => setTimeout(r, 300));
-    navigate(role.path);
-    toast.success(`Accessing ${role.name} dashboard`);
+    // Navigate to role-specific login
+    navigate(`/login?role=${role.id}`);
+    toast.success(`Selected ${role.name}`);
   };
 
   const handleLogout = async () => {

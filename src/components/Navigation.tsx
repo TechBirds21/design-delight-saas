@@ -42,13 +42,12 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" className="text-foreground/70 hover:text-primary" asChild>
-              <a href="/app/login">Sign In</a>
+              <a href="/select-role">Sign In</a>
             </Button>
             <Button className="bg-gradient-primary text-white border-0 shadow-glow hover-lift" asChild>
-              <a href="/app/signup">Get Started</a>
+              <a href="/select-role">Get Started</a>
             </Button>
           </div>
 
@@ -86,10 +85,10 @@ export function Navigation() {
               ))}
               <div className="border-t border-border/50 pt-3 mt-3 space-y-2">
                 <Button variant="ghost" className="w-full justify-start" asChild>
-                  <a href="/app/login">Sign In</a>
+                  <a href="/select-role">Sign In</a>
                 </Button>
                 <Button className="w-full bg-gradient-primary text-white border-0" asChild>
-                  <a href="/app/signup">Get Started</a>
+                  <a href="/select-role">Get Started</a>
                 </Button>
               </div>
             </div>

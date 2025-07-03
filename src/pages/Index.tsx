@@ -29,7 +29,7 @@ export default function Index() {
     );
   }
 
-  // If not authenticated, show landing page
+  // If not authenticated, show landing page with option to go to role selection
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

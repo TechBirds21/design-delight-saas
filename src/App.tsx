@@ -18,6 +18,7 @@ import DoctorProfile from '@/pages/doctor/DoctorProfile';
 
 // Auth & Landing Pages
 import Login from '@/pages/Login';
+import RoleLogin from '@/pages/RoleLogin';
 import RoleSelect from '@/pages/RoleSelect';
 import NotFound from '@/pages/NotFound';
 import Unauthorized from '@/pages/Unauthorized';
@@ -47,8 +48,9 @@ const App: React.FC = () => {
               <Route path="/" element={<Index />} />
               
               {/* Auth Routes */}
-              <Route path="/login" element={<Login />} />
               <Route path="/select-role" element={<RoleSelect />} />
+              <Route path="/login" element={<RoleLogin />} />
+              <Route path="/old-login" element={<Login />} />
               
               {/* Role-Based Dashboards */}
               <Route 
